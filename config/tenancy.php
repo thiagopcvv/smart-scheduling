@@ -16,7 +16,6 @@ return [
      * Only relevant if you're using the domain or subdomain identification middleware.
      */
     'central_domains' => [
-        config('app.domain'),
         '127.0.0.1',
         'localhost',
     ],
