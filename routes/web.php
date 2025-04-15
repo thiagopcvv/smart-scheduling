@@ -7,19 +7,23 @@ use App\Http\Controllers\Central\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Central\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Settings\ProfileController;
 use App\Http\Controllers\Settings\PasswordController;
-
+use \App\Http\Controllers\DashboardController;
 
 Route::prefix('admin')->group(function () {
 
     Route::middleware(['auth', 'verified'])->group(function () {
-        Route::get('/', function () {
-            return Inertia::render('Central/dashboard');
-        })->name('dashboard');
+        Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
     });
 
     Route::middleware('guest')->group(function () {
         Route::get('login', [AuthenticatedSessionController::class, 'create'])
             ->name('login');
+
+        Route::post('login', [AuthenticatedSessionController::class, 'store'])
+            ->name('login-post');
+
+        Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
+            ->name('logout');
 
         Route::get('forgot-password', [PasswordResetLinkController::class, 'create'])
             ->name('password.request');
