@@ -28,6 +28,14 @@
             html.dark {
                 background-color: oklch(0.145 0 0);
             }
+
+            html.blue {
+                background-color: oklch(1 0 0);
+            }
+
+            html.blue-dark {
+                background-color: oklch(0.141 0.005 285.823);
+            }
         </style>
 
         <title inertia>{{ config('app.name', 'Laravel') }}</title>

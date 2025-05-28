@@ -1,13 +1,12 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
-
 use App\Http\Controllers\Central\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Central\Auth\PasswordResetLinkController;
-use App\Http\Controllers\Settings\ProfileController;
+use App\Http\Controllers\Central\DashboardController;
 use App\Http\Controllers\Settings\PasswordController;
-use \App\Http\Controllers\DashboardController;
+use App\Http\Controllers\Settings\ProfileController;
+use Illuminate\Support\Facades\Route;
+use Inertia\Inertia;
 
 Route::prefix('admin')->group(function () {
 
@@ -40,6 +39,5 @@ Route::prefix('admin')->group(function () {
         Route::get('forgot-password', [PasswordResetLinkController::class, 'create'])
             ->name('password.request');
     });
-
 
 });
