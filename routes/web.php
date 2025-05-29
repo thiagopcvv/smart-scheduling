@@ -3,8 +3,9 @@
 use App\Http\Controllers\Central\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Central\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Central\DashboardController;
-use App\Http\Controllers\Settings\PasswordController;
-use App\Http\Controllers\Settings\ProfileController;
+use App\Http\Controllers\Central\Settings\PasswordController;
+use App\Http\Controllers\Central\Settings\ProfileController;
+use App\Http\Controllers\Central\TenantController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -24,6 +25,8 @@ Route::prefix('admin')->group(function () {
         Route::get('settings/appearance', function () {
             return Inertia::render('Central/Settings/appearance');
         })->name('appearance');
+
+        Route::get('tenant-register', [TenantController::class, 'index'])->name('tenant.register');
     });
 
     Route::middleware('guest')->group(function () {
