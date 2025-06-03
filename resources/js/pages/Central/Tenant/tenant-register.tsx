@@ -14,8 +14,9 @@ interface iTenantRegisterProps {
 export default function TenantRegister({ id = null }: iTenantRegisterProps) {
     const form = useForm({
         defaultValues: {
-            name: null,
+            tenant_id: null,
             domain: null,
+            db_name: null,
             active: false,
         },
     });
@@ -27,7 +28,7 @@ export default function TenantRegister({ id = null }: iTenantRegisterProps) {
         },
     ];
 
-    function handleSubmit(values: { name: string | null; domain: string | null; active: boolean }) {
+    function handleSubmit(values: { name: string | null; tenant_id: string | null; domain: string | null; active: boolean; db_name: string | null }) {
         router.post(route('tenant.store'), values);
     }
 
@@ -48,7 +49,7 @@ export default function TenantRegister({ id = null }: iTenantRegisterProps) {
                                     name="name"
                                     render={({ field }) => (
                                         <FormItem>
-                                            <FormLabel>Nome</FormLabel>
+                                            <FormLabel>Nome Cliente</FormLabel>
                                             <FormControl>
                                                 <Input {...field} />
                                             </FormControl>
@@ -62,6 +63,20 @@ export default function TenantRegister({ id = null }: iTenantRegisterProps) {
                                     render={({ field }) => (
                                         <FormItem>
                                             <FormLabel>Domínio</FormLabel>
+                                            <FormControl>
+                                                <Input {...field} />
+                                            </FormControl>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+
+                                <FormField
+                                    control={form.control}
+                                    name="tenant_id"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel>Tenant_id</FormLabel>
                                             <FormControl>
                                                 <Input {...field} />
                                             </FormControl>
