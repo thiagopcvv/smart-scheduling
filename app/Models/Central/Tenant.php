@@ -12,4 +12,13 @@ class Tenant extends BaseTenant implements TenantWithDatabase
     use HasDatabase, HasDomains;
 
     protected $table = 'tenants';
+    protected $casts = [
+        'data' => 'array'
+    ];
+
+    public function domain()
+    {
+        return $this->hasOne('App\Models\Central\Domain\Domain', 'id', 'domain_id');
+    }
+
 }
