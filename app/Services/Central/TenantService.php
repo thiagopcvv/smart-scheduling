@@ -5,13 +5,18 @@ use App\Repositories\Central\TenantRepository;
 
 class TenantService
 {
-
-    protected TenantRepository $tenantRepository;
-    public function __construct(){
-        $this->tenantRepository = resolve(TenantRepository::class);
-    }
-
+    public function __construct(protected TenantRepository $tenantRepository)
+    {}
     public function getAll(){
         return $this->tenantRepository->getAll();
+    }
+
+    public function store(array $data): void
+    {
+        $tenant = $this->tenantRepository->store($data);
+
+        $tenant->domains()->create([
+            'domain' => $data['domain'],
+        ]);
     }
 }
