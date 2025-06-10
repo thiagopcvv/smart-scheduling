@@ -36,7 +36,7 @@ class TenantController extends Controller
     public function edit($id)
     {
         $tenant = Tenant::where('id', $id)->first();
-        return inertia('Central/Tenant/tenant-register', $tenant->toArray());
+        return Inertia::render('Central/Tenant/tenant-register', ['tenant' => $tenant->toArray()]);
     }
 
     public function update(Request $request, string $id)
