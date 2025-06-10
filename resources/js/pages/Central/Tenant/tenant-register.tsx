@@ -29,7 +29,11 @@ export default function TenantRegister({ tenant = null }: iTenantRegisterProps) 
         },
     ];
 
-    function handleSubmit(values: { name: string | null; tenant_id: string | null; domain: string | null; active: boolean; db_name: string | null }) {
+    function handleSubmit(values: { name: string | null; id: string | null; domain: string | null; active: boolean; db_name: string | null }) {
+        if(tenant) {
+            router.post(route('tenant.update', values));
+            return;
+        }
         router.post(route('tenant.store'), values);
     }
 
@@ -52,7 +56,7 @@ export default function TenantRegister({ tenant = null }: iTenantRegisterProps) 
                                         <FormItem>
                                             <FormLabel>Nome Cliente</FormLabel>
                                             <FormControl>
-                                                <Input {...field} defaultValue={tenant?.id} />
+                                                <Input {...field} defaultValue={tenant?.name} />
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>
@@ -74,12 +78,12 @@ export default function TenantRegister({ tenant = null }: iTenantRegisterProps) 
 
                                 <FormField
                                     control={form.control}
-                                    name="tenant_id"
+                                    name="id"
                                     render={({ field }) => (
                                         <FormItem>
-                                            <FormLabel>Tenant_id</FormLabel>
+                                            <FormLabel>Tenant id</FormLabel>
                                             <FormControl>
-                                                <Input {...field} defaultValue={tenant?.id} />
+                                                <Input {...field} defaultValue={tenant?.id} disabled={!!tenant?.id} />
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>
