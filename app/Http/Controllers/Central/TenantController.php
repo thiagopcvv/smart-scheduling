@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Central;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Central\TenantResource;
 use App\Services\Central\TenantService;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -35,8 +36,7 @@ class TenantController extends Controller
 
     public function edit($id)
     {
-        $tenant = Tenant::where('id', $id)->first();
-        return Inertia::render('Central/Tenant/tenant-register', ['tenant' => $tenant->toArray()]);
+        return Inertia::render('Central/Tenant/tenant-register', ['tenant' => new TenantResource(Tenant::where('id', $id)->first())]);
     }
 
     public function update(Request $request, string $id)
