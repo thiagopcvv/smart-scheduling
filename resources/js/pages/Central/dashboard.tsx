@@ -4,6 +4,7 @@ import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
 import { Head, router, usePage } from '@inertiajs/react';
 import { Button } from '@/components/ui/button';
+import { iTenantObject } from '@/types/tenant';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -13,8 +14,7 @@ const breadcrumbs: BreadcrumbItem[] = [
 ];
 
 export default function Dashboard() {
-    const { props } = usePage<any>();
-
+    const { props } = usePage<{tenants: iTenantObject[]}>();
     const { tenants } = props;
 
     return (
@@ -28,7 +28,7 @@ export default function Dashboard() {
                     ) : (
                         <div className="absolute inset-0 flex items-center justify-start p-4 items-start gap-4">
                             {tenants.map((tenant) => (
-                                <Card key={tenant.id} className="w-full max-w-sm bg-card">
+                                <Card key={tenant.id} className="w-full max-w-sm bg-card" onClick={() => router.visit(`admin/tenant-register/${tenant.id}`)}>
                                     <CardHeader>
                                         <CardTitle>Tenant: {tenant.id}</CardTitle>
                                         <CardDescription>Banco: {tenant.tenancy_db_name}</CardDescription>
