@@ -41,6 +41,6 @@ class TenantController extends Controller
 
     public function update(Request $request, string $id)
     {
-        //
+        return $this->tenantService->update($request->input());
     }
 }

@@ -23,4 +23,8 @@ class TenantService
             'domain' => $data['domain'],
         ]);
     }
+
+    public function update(array $data) {
+        return $this->tenantRepository->update($data);
+    }
 }

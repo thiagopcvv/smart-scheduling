@@ -16,4 +16,9 @@ class TenantRepository{
     {
         return Tenant::create($data);
     }
+
+    public function update(array $data, $id): Tenant
+    {
+        return Tenant::where('id', $id)->update($data);
+    }
 }
