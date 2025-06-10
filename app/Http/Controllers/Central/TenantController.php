@@ -3,14 +3,15 @@
 namespace App\Http\Controllers\Central;
 
 use App\Http\Controllers\Controller;
+use App\Services\Central\TenantService;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use Illuminate\Support\Facades\DB;
 use App\Models\Central\Tenant;
-use Illuminate\Support\Facades\Artisan;
 
 class TenantController extends Controller
 {
+    public function __construct(protected TenantService $tenantService)
+    {}
     /**
      * Display a listing of the resource.
      */
@@ -21,25 +22,15 @@ class TenantController extends Controller
 
     public function store(Request $request)
     {
-        $dados = $request->all();
+        try {
+            $data = $request->all();
 
-        $tenant = Tenant::make([
-            'id' => $dados['tenant_id'],
-            'data' => [
-                'db_name' => "smart_" . $dados['tenant_id'],
-                'active' => true,
-                'name' => $dados['name'],
-                'domain' => $dados['domain'],
-            ],
-        ]);
+            $this->tenantService->store($data);
 
-        $tenant->save();
-
-        $tenant->domains()->create([
-            'domain' => $dados['domain'],
-        ]);
-
-        return response()->json(['message' => 'Tenant criado com sucesso!']);
+            return response()->json(['message' => 'Tenant criado com sucesso!']);
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()]);
+        }
     }
 
     public function update(Request $request, string $id)
