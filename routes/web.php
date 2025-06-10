@@ -27,6 +27,7 @@ Route::prefix('admin')->group(function () {
         })->name('appearance');
 
         Route::get('tenant-register', [TenantController::class, 'index'])->name('tenant.register');
+        Route::get('tenant-register/{id}', [TenantController::class, 'edit']);
         Route::post('tenant-store', [TenantController::class, 'store'])->name('tenant.store');
     });
 
