@@ -4,14 +4,15 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { Input } from '@/components/ui/input';
 import AppLayout from '@/layouts/app-layout';
 import { BreadcrumbItem } from '@/types';
+import { iTenantObject } from '@/types/tenant';
 import { Head, router } from '@inertiajs/react';
 import { useForm } from 'react-hook-form';
 
 interface iTenantRegisterProps {
-    id: number | null;
+    tenant: iTenantObject | null;
 }
 
-export default function TenantRegister({ id = null }: iTenantRegisterProps) {
+export default function TenantRegister({ tenant = null }: iTenantRegisterProps) {
     const form = useForm({
         defaultValues: {
             tenant_id: null,
@@ -23,7 +24,7 @@ export default function TenantRegister({ id = null }: iTenantRegisterProps) {
 
     const breadcrumbs: BreadcrumbItem[] = [
         {
-            title: id ? 'Editar Cliente' : 'Cadastrar Cliente',
+            title: tenant ? 'Editar Cliente' : 'Cadastrar Cliente',
             href: '/Central/Tenant/tenant-register',
         },
     ];
@@ -34,11 +35,11 @@ export default function TenantRegister({ id = null }: iTenantRegisterProps) {
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
-            <Head title={id ? 'Editar Cliente' : 'Cadastrar Cliente'} />
+            <Head title={tenant ? 'Editar Cliente' : 'Cadastrar Cliente'} />
             <div className={'flex flex-col gap-6'}>
-                <Card className={"m-5"}>
+                <Card className={'m-5'}>
                     <CardHeader>
-                        <CardTitle className="text-2xl">{id ? "Edutar" : "Cadastrar"}</CardTitle>
+                        <CardTitle className="text-2xl">{tenant ? 'Editar' : 'Cadastrar'}</CardTitle>
                         <CardDescription>Insira os dados do cliente</CardDescription>
                     </CardHeader>
                     <CardContent>
@@ -51,7 +52,7 @@ export default function TenantRegister({ id = null }: iTenantRegisterProps) {
                                         <FormItem>
                                             <FormLabel>Nome Cliente</FormLabel>
                                             <FormControl>
-                                                <Input {...field} />
+                                                <Input {...field} defaultValue={tenant?.id} />
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>
@@ -64,7 +65,7 @@ export default function TenantRegister({ id = null }: iTenantRegisterProps) {
                                         <FormItem>
                                             <FormLabel>Domínio</FormLabel>
                                             <FormControl>
-                                                <Input {...field} />
+                                                <Input {...field} defaultValue={tenant?.domain} />
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>
@@ -78,7 +79,7 @@ export default function TenantRegister({ id = null }: iTenantRegisterProps) {
                                         <FormItem>
                                             <FormLabel>Tenant_id</FormLabel>
                                             <FormControl>
-                                                <Input {...field} />
+                                                <Input {...field} defaultValue={tenant?.id} />
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>

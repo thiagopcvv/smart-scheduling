@@ -1,7 +1,8 @@
 export interface iTenantObject {
-    id: number
-    data: string | null
-    tenancy_db_name: string
-    created_at: string
+    id: number;
+    data: string | null;
+    domain: string;
+    db_name: string;
+    created_at: string;
     updated_at: string;
 }
