@@ -2,23 +2,40 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { Checkbox } from '@/components/ui/checkbox';
 import AppLayout from '@/layouts/app-layout';
 import { BreadcrumbItem } from '@/types';
 import { iTenantObject } from '@/types/tenant';
 import { Head, router } from '@inertiajs/react';
 import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import * as z from 'zod';
+
+const tenantSchema = z.object({
+    id: z.string().min(1, 'O id é obrigatório').min(3, 'O id deve ter pelo menos 3 caracter').max(20, 'O nome não pode ter mais de 20 caracteres'),
+    domain: z.string()
+        .min(1, 'O domínio é obrigatório'),
+    name: z.string()
+        .min(1, 'O nome é obrigatório')
+        .min(3, 'O nome deve ter pelo menos 3 caracteres')
+        .max(100, 'O nome não pode ter mais de 100 caracteres'),
+    active: z.boolean()
+});
+
+type FormData = z.infer<typeof tenantSchema>;
 
 interface iTenantRegisterProps {
     tenant: iTenantObject | null;
 }
 
 export default function TenantRegister({ tenant = null }: iTenantRegisterProps) {
-    const form = useForm({
+    const form = useForm<FormData>({
+        resolver: zodResolver(tenantSchema),
         defaultValues: {
-            tenant_id: null,
-            domain: null,
-            db_name: null,
-            active: false,
+            id: tenant?.id?.toString() || '',
+            domain: tenant?.domain || '',
+            name: tenant?.name || '',
+            active: tenant?.active || false
         },
     });
 
@@ -29,13 +46,15 @@ export default function TenantRegister({ tenant = null }: iTenantRegisterProps) 
         },
     ];
 
-    function handleSubmit(values: { name: string | null; id: string | null; domain: string | null; active: boolean; db_name: string | null }) {
-        if(tenant) {
-            router.post(route('tenant.update', values));
+    function handleSubmit(data: FormData) {
+        if (tenant) {
+            console.log(data);
+            router.post(route('tenant.update'), data);
             return;
         }
-        router.post(route('tenant.store'), values);
+        router.post(route('tenant.store'), data);
     }
+
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
@@ -56,7 +75,7 @@ export default function TenantRegister({ tenant = null }: iTenantRegisterProps) 
                                         <FormItem>
                                             <FormLabel>Nome Cliente</FormLabel>
                                             <FormControl>
-                                                <Input {...field} defaultValue={tenant?.name} />
+                                                <Input {...field} />
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>
@@ -69,7 +88,7 @@ export default function TenantRegister({ tenant = null }: iTenantRegisterProps) 
                                         <FormItem>
                                             <FormLabel>Domínio</FormLabel>
                                             <FormControl>
-                                                <Input {...field} defaultValue={tenant?.domain} />
+                                                <Input {...field} />
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>
@@ -83,9 +102,28 @@ export default function TenantRegister({ tenant = null }: iTenantRegisterProps) 
                                         <FormItem>
                                             <FormLabel>Tenant id</FormLabel>
                                             <FormControl>
-                                                <Input {...field} defaultValue={tenant?.id} disabled={!!tenant?.id} />
+                                                <Input {...field} disabled={!!tenant?.id} />
                                             </FormControl>
                                             <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+                                <FormField
+                                    control={form.control}
+                                    name="active"
+                                    render={({ field }) => (
+                                        <FormItem className="flex flex-row items-start space-x-3 space-y-0 p-4">
+                                            <FormControl>
+                                                <Checkbox
+                                                    checked={field.value}
+                                                    onCheckedChange={field.onChange}
+                                                />
+                                            </FormControl>
+                                            <div className="space-y-1 leading-none">
+                                                <FormLabel>
+                                                    Cliente Ativo
+                                                </FormLabel>
+                                            </div>
                                         </FormItem>
                                     )}
                                 />
