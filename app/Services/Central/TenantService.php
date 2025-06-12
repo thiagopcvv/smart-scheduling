@@ -11,6 +11,10 @@ class TenantService
         return $this->tenantRepository->getAll();
     }
 
+    public function get($id)
+    {
+        return $this->tenantRepository->getById($id);
+    }
     public function store(array $data): void
     {
         $tenant = $this->tenantRepository->store($data);
@@ -18,5 +22,9 @@ class TenantService
         $tenant->domains()->create([
             'domain' => $data['domain'],
         ]);
+    }
+
+    public function update(array $data) {
+        return $this->tenantRepository->update($data);
     }
 }

@@ -15,10 +15,4 @@ class Tenant extends BaseTenant implements TenantWithDatabase
     protected $casts = [
         'data' => 'array'
     ];
-
-    public function domain()
-    {
-        return $this->hasOne('App\Models\Central\Domain\Domain', 'id', 'domain_id');
-    }
-
 }

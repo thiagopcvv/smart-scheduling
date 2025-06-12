@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Central;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Central\TenantResource;
 use App\Services\Central\TenantService;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -27,14 +28,24 @@ class TenantController extends Controller
 
             $this->tenantService->store($data);
 
-            return response()->json(['message' => 'Tenant criado com sucesso!']);
+            return redirect()->route('dashboard');
         } catch (\Exception $e) {
-            return response()->json(['message' => $e->getMessage()]);
+            return response()->json(['message' => $e->getMessage()], 422);
         }
     }
 
-    public function update(Request $request, string $id)
+    public function edit($id)
     {
-        //
+        return Inertia::render('Central/Tenant/tenant-register', ['tenant' => new TenantResource($this->tenantService->get($id))]);
+    }
+
+    public function update(Request $request)
+    {
+        try {
+            $this->tenantService->update($request->input());
+            return redirect()->route('dashboard');
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 422);
+        }
     }
 }
