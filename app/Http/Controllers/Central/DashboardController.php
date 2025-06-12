@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Central;
 use App\Http\Controllers\Controller;
 use App\Services\Central\TenantService;
 use Inertia\Inertia;
+use App\Http\Resources\Tenant\TenantResource;
 
 class DashboardController extends Controller
 {
@@ -16,6 +17,6 @@ class DashboardController extends Controller
     }
 
     public function index(){
-        return Inertia::render('Central/dashboard', ['tenants' => $this->tenantService->getAll()]);
+        return Inertia::render('Central/dashboard', ['tenants' => TenantResource::collection($this->tenantService->getAll())]);
     }
 }

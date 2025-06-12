@@ -11,11 +11,11 @@ class TenantResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'data' => $this->data,
-            'db_name' => $this->tenancy_db_name,
+            'domain' => $this->domains->first()->domain,
+            'active' => $this->active,
+            'name' => $this->name,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
-            'domain' => $this->domain()->toArray(),
         ];
     }
 }

@@ -29,6 +29,7 @@ interface iTenantRegisterProps {
 }
 
 export default function TenantRegister({ tenant = null }: iTenantRegisterProps) {
+    console.log(tenant);
     const form = useForm<FormData>({
         resolver: zodResolver(tenantSchema),
         defaultValues: {
@@ -48,11 +49,18 @@ export default function TenantRegister({ tenant = null }: iTenantRegisterProps) 
 
     function handleSubmit(data: FormData) {
         if (tenant) {
-            console.log(data);
-            router.post(route('tenant.update'), data);
+            router.post(route('tenant.update'), data, {
+                onSuccess: () => {
+                    router.visit(route('dashboard'));
+                }
+            });
             return;
         }
-        router.post(route('tenant.store'), data);
+        router.post(route('tenant.store'), data, {
+            onSuccess: () => {
+                router.visit(route('dashboard'));
+            }
+        });
     }
 
 

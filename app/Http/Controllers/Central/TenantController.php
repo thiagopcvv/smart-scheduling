@@ -28,19 +28,24 @@ class TenantController extends Controller
 
             $this->tenantService->store($data);
 
-            return response()->json(['message' => 'Tenant criado com sucesso!']);
+            return redirect()->route('dashboard');
         } catch (\Exception $e) {
-            return response()->json(['message' => $e->getMessage()]);
+            return response()->json(['message' => $e->getMessage()], 422);
         }
     }
 
     public function edit($id)
     {
-        return Inertia::render('Central/Tenant/tenant-register', ['tenant' => new TenantResource(Tenant::where('id', $id)->first())]);
+        return Inertia::render('Central/Tenant/tenant-register', ['tenant' => new TenantResource($this->tenantService->get($id))]);
     }
 
-    public function update(Request $request, string $id)
+    public function update(Request $request)
     {
-        return $this->tenantService->update($request->input());
+        try {
+            $this->tenantService->update($request->input());
+            return redirect()->route('dashboard');
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 422);
+        }
     }
 }
