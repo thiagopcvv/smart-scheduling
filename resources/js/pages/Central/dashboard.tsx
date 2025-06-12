@@ -17,7 +17,6 @@ export default function Dashboard() {
     const { props } = usePage<{tenants: {data: iTenantObject[]} }>();
     const { tenants } = props;
 
-
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Dashboard" />
@@ -31,7 +30,8 @@ export default function Dashboard() {
                             {tenants?.data.map((tenant) => (
                                 <Card key={tenant.id} className="w-full max-w-sm bg-card" onClick={() => router.visit(`admin/tenant-register/${tenant.id}`)}>
                                     <CardHeader>
-                                        <CardTitle>Tenant: {tenant.id}</CardTitle>
+                                        <CardTitle>Tenant id: {tenant.id}</CardTitle>
+                                        <CardTitle>Nome: {tenant.name}</CardTitle>
                                     </CardHeader>
                                     <CardContent>
                                         <p className="text-sm">

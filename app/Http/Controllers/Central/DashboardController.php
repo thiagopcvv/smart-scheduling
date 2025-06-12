@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Central;
 use App\Http\Controllers\Controller;
 use App\Services\Central\TenantService;
 use Inertia\Inertia;
-use App\Http\Resources\Tenant\TenantResource;
+use App\Http\Resources\Central\TenantResource;
 
 class DashboardController extends Controller
 {
