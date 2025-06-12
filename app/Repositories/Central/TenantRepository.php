@@ -19,9 +19,6 @@ class TenantRepository{
 
     public function update(array $data)
     {
-        DB::transaction(function () use ($data) {
-
-            return Tenant::where('id', $data['id'])->update(['data' => $data]);
-        });
+        return Tenant::where('id', $data['id'])->update(['data' => $data]);
     }
 }
