@@ -24,6 +24,7 @@ class TenantController extends Controller
     public function store(Request $request)
     {
         try {
+            abort(500, "teste");
             $data = $request->all();
 
             $this->tenantService->store($data);
