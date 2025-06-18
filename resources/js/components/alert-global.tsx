@@ -1,33 +1,64 @@
-// components/GlobalErrorAlert.tsx
-import { usePage } from '@inertiajs/react'
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
-import { useEffect, useState } from 'react'
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { usePage } from '@inertiajs/react';
+import { useEffect, useState } from 'react';
+import { FaCheckCircle } from 'react-icons/fa';
+import { MdCancel } from 'react-icons/md';
 
-export function AlertGlobal(status: string = 'error', msg: string = '') {
-    const { errors } = usePage().props;
-    const [visible, setVisible] = useState(false)
+type FlashType = 'success' | 'error' | 'warning' | 'info';
+
+type FlashMessages = Record<FlashType, string | null>;
+
+const iconMap = {
+    success: <FaCheckCircle />,
+    error: <MdCancel />,
+    warning: null,
+    info: null,
+};
+
+const titleMap = {
+    success: 'Sucesso',
+    error: 'Erro',
+    warning: 'Aviso',
+    info: 'Informação',
+};
+
+export function AlertGlobal() {
+    const { flash } = usePage().props;
+
+    const [visible, setVisible] = useState(false);
+    const [type, setType] = useState<FlashType | null>(null);
+    const [message, setMessage] = useState('');
 
     useEffect(() => {
-        if (Object.keys(errors).length > 0) {
-            setVisible(true)
+        // Pega o primeiro flash que não é null
+        const entry = Object.entries(flash).find(([_, msg]) => msg !== null);
 
-            const timer = setTimeout(() => setVisible(false), 5000)
-            return () => clearTimeout(timer)
+        console.log(entry);
+
+        if (entry) {
+            const [flashType, flashMessage] = entry as [FlashType, string];
+            setType(flashType);
+            setMessage(flashMessage);
+            setVisible(true);
+
+            const timer = setTimeout(() => setVisible(false), 5000);
+            return () => clearTimeout(timer);
         }
-    }, [errors])
+    }, [flash]);
 
-    if(!visible) return null;
+    if (!visible || !type) return null;
 
     return (
         <div className="fixed top-4 right-4 z-50 w-[300px]">
-            <Alert variant="destructive">
-                <AlertTitle>Erro</AlertTitle>
-                <AlertDescription>
-                    {Object.values(errors).map((error, index) => (
-                        <div key={index}>{error as string}</div>
-                    ))}
-                </AlertDescription>
+            <Alert variant={type === 'error' ? 'destructive' : 'default'}>
+                {iconMap[type]}
+                <div className="flex items-start gap-2">
+                    <div>
+                        <AlertTitle>{titleMap[type]}</AlertTitle>
+                        <AlertDescription>{message}</AlertDescription>
+                    </div>
+                </div>
             </Alert>
         </div>
-    )
+    );
 }

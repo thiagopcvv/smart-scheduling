@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 use Inertia\Middleware;
 use Tighten\Ziggy\Ziggy;
 
@@ -51,6 +52,12 @@ class HandleInertiaRequests extends Middleware
                 'location' => $request->url(),
             ],
             'sidebarOpen' => $request->cookie('sidebar_state') === 'true',
+            'flash' => [
+                'success' => fn () => Session::get('success'),
+                'error' => fn () => Session::get('error'),
+                'info' => fn () => Session::get('info'),
+                'warning' => fn () => Session::get('warning'),
+            ],
         ];
     }
 }
