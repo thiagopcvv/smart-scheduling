@@ -28,7 +28,7 @@ class TenantController extends Controller
 //
 //            $this->tenantService->store($data);
 
-            return redirect()->route('dashboard')->with('error', 'Tenant created successfully.');
+            return redirect()->route('dashboard')->with('success', 'Tenant created successfully.');
         } catch (\Exception $e) {
             return response()->json(['message' => $e->getMessage()], 422);
         }

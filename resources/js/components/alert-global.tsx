@@ -2,6 +2,7 @@ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { usePage } from '@inertiajs/react';
 import { useEffect, useState } from 'react';
 import { FaCheckCircle } from 'react-icons/fa';
+import { IoIosInformationCircle, IoIosWarning } from 'react-icons/io';
 import { MdCancel } from 'react-icons/md';
 
 type FlashType = 'success' | 'error' | 'warning' | 'info';
@@ -11,8 +12,8 @@ type FlashMessages = Record<FlashType, string | null>;
 const iconMap = {
     success: <FaCheckCircle />,
     error: <MdCancel />,
-    warning: null,
-    info: null,
+    warning: <IoIosWarning />,
+    info: <IoIosInformationCircle />,
 };
 
 const titleMap = {
@@ -30,10 +31,7 @@ export function AlertGlobal() {
     const [message, setMessage] = useState('');
 
     useEffect(() => {
-        // Pega o primeiro flash que não é null
         const entry = Object.entries(flash).find(([_, msg]) => msg !== null);
-
-        console.log(entry);
 
         if (entry) {
             const [flashType, flashMessage] = entry as [FlashType, string];
@@ -50,7 +48,7 @@ export function AlertGlobal() {
 
     return (
         <div className="fixed top-4 right-4 z-50 w-[300px]">
-            <Alert variant={type === 'error' ? 'destructive' : 'default'}>
+            <Alert variant={type === 'error' ? 'destructive' : type}>
                 {iconMap[type]}
                 <div className="flex items-start gap-2">
                     <div>
