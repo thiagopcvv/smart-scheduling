@@ -24,9 +24,9 @@ class TenantController extends Controller
     public function store(Request $request)
     {
         try {
-//            $data = $request->all();
-//
-//            $this->tenantService->store($data);
+           $data = $request->all();
+
+           $this->tenantService->store($data);
 
             return redirect()->route('dashboard')->with('success', 'Tenant created successfully.');
         } catch (\Exception $e) {
