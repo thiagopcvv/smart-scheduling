@@ -30,7 +30,7 @@ class TenantController extends Controller
 
             return redirect()->route('dashboard')->with('success', 'Tenant created successfully.');
         } catch (\Exception $e) {
-            return response()->json(['message' => $e->getMessage()], 422);
+            return redirect()->route('tenant.register')->with('error', 'Erro ao criar cliente');
         }
     }
 

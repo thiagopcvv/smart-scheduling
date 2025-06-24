@@ -25,8 +25,8 @@ const titleMap = {
 
 export function AlertGlobal() {
     const { flash } = usePage().props;
-
     const [visible, setVisible] = useState(false);
+    const [exiting, setExiting] = useState(false);
     const [type, setType] = useState<FlashType | null>(null);
     const [message, setMessage] = useState('');
 
@@ -38,17 +38,23 @@ export function AlertGlobal() {
             setType(flashType);
             setMessage(flashMessage);
             setVisible(true);
+            setExiting(false);
 
-            const timer = setTimeout(() => setVisible(false), 5000);
+            const timer = setTimeout(() => {
+                setExiting(true);
+
+                setTimeout(() => setVisible(false), 300);
+            }, 3000);
+
             return () => clearTimeout(timer);
         }
     }, [flash]);
 
-    if (!visible || !type) return null;
+    if ((exiting && !visible) || !type) return null;
 
     return (
         <div className="fixed top-4 right-4 z-50 w-[300px]">
-            <Alert variant={type === 'error' ? 'destructive' : type}>
+            <Alert exiting={exiting} variant={type === 'error' ? 'destructive' : type}>
                 {iconMap[type]}
                 <div className="flex items-start gap-2">
                     <div>
