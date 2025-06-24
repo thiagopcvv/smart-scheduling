@@ -6,11 +6,13 @@ use Illuminate\Support\Facades\DB;
 
 class TenantRepository{
 
-    public function getAll(){
+    public function getAll()
+    {
         return Tenant::all();
     }
 
-    public function getById($id){
+    public function getById($id)
+    {
         return Tenant::where('id', $id)->first();
     }
     public function store(array $data): Tenant

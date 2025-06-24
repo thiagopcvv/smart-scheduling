@@ -24,13 +24,13 @@ class TenantController extends Controller
     public function store(Request $request)
     {
         try {
-            $data = $request->all();
+           $data = $request->all();
 
-            $this->tenantService->store($data);
+           $this->tenantService->store($data);
 
-            return redirect()->route('dashboard');
+            return redirect()->route('dashboard')->with('success', 'Tenant created successfully.');
         } catch (\Exception $e) {
-            return response()->json(['message' => $e->getMessage()], 422);
+            return redirect()->route('tenant.register')->with('error', 'Erro ao criar cliente');
         }
     }
 
