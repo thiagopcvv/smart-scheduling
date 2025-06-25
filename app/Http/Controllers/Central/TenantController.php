@@ -28,7 +28,7 @@ class TenantController extends Controller
 
            $this->tenantService->store($data);
 
-            return redirect()->route('dashboard')->with('success', 'Tenant created successfully.');
+            return redirect()->route('dashboard')->with('success', 'Cliente criado com sucesso.');
         } catch (\Exception $e) {
             return redirect()->route('tenant.register')->with('error', 'Erro ao criar cliente');
         }
@@ -42,10 +42,13 @@ class TenantController extends Controller
     public function update(Request $request)
     {
         try {
-            $this->tenantService->update($request->input());
-            return redirect()->route('dashboard');
-        } catch (\Exception $e) {
-            return response()->json(['message' => $e->getMessage()], 422);
-        }
+            $data = $request->all();
+ 
+            $this->tenantService->update($data);
+ 
+             return redirect()->route('dashboard')->with('success', 'Cliente atualizado com sucesso.');
+         } catch (\Exception $e) {
+             return redirect()->route('tenant.update')->with('error', 'Erro ao editar cliente');
+         }
     }
 }

@@ -31,7 +31,8 @@ class TenantService
         ]);
     }
 
-    public function update(array $data) {
+    public function update(array $data)
+    {
         return $this->tenantRepository->update($data);
     }
 }
