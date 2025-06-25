@@ -5,8 +5,14 @@ use App\Repositories\Central\TenantRepository;
 
 class TenantService
 {
-    public function __construct(protected TenantRepository $tenantRepository)
-    {}
+
+    protected $tenantRepository;
+
+    public function __construct()
+    {
+        $this->tenantRepository = resolve(TenantRepository::class);
+    }
+
     public function getAll(){
         return $this->tenantRepository->getAll();
     }
@@ -15,6 +21,7 @@ class TenantService
     {
         return $this->tenantRepository->getById($id);
     }
+
     public function store(array $data): void
     {
         $tenant = $this->tenantRepository->store($data);
