@@ -1,5 +1,5 @@
+import CustomCard from '@/components/custom-card';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { PlaceholderPattern } from '@/components/ui/placeholder-pattern';
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
@@ -28,22 +28,19 @@ export default function Dashboard() {
                     {!tenants?.data || (tenants?.data && tenants?.data.length) === 0 ? (
                         <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
                     ) : (
-                        <div className="absolute inset-0 flex items-center items-start justify-start gap-4 p-4">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 p-4 justify-items-center">
                             {tenants?.data.map((tenant) => (
-                                <Card
-                                    key={tenant.id}
-                                    className="bg-card w-full max-w-sm"
+                                <CustomCard
+                                    title={`Tenant id: ${tenant.id}`}
+                                    isActive={tenant.active}
                                     onClick={() => router.visit(`admin/tenant-register/${tenant.id}`)}
+                                    key={tenant.id}
                                 >
-                                    <CardHeader>
-                                        <CardTitle>Tenant id: {tenant.id}</CardTitle>
-                                        <CardTitle>Nome: {tenant.name}</CardTitle>
-                                    </CardHeader>
-                                    <CardContent>
-                                        <p className="text-sm">Criado em: {new Date(tenant.created_at).toLocaleDateString('pt-BR')}</p>
-                                        <p className="text-sm">Atualizado em: {new Date(tenant.updated_at).toLocaleDateString('pt-BR')}</p>
-                                    </CardContent>
-                                </Card>
+                                    <p className="text-sm">Nome: {tenant.name}</p>
+                                    <p className="text-sm">Criado em: {new Date(tenant.created_at).toLocaleDateString('pt-BR')}</p>
+                                    <p className="text-sm">Atualizado em: {new Date(tenant.updated_at).toLocaleDateString('pt-BR')}</p>
+                                    <p className="text-sm">Ativo: {tenant.active ? 'Sim' : 'Não'}</p>
+                                </CustomCard>
                             ))}
                         </div>
                     )}

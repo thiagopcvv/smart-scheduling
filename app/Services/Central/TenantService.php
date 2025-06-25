@@ -15,6 +15,7 @@ class TenantService
     {
         return $this->tenantRepository->getById($id);
     }
+
     public function store(array $data): void
     {
         $tenant = $this->tenantRepository->store($data);
@@ -24,7 +25,8 @@ class TenantService
         ]);
     }
 
-    public function update(array $data) {
+    public function update(array $data)
+    {
         return $this->tenantRepository->update($data);
     }
 }

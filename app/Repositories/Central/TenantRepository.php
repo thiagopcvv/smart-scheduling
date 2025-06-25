@@ -8,7 +8,7 @@ class TenantRepository{
 
     public function getAll()
     {
-        return Tenant::all();
+        return Tenant::orderBy('created_at', 'desc')->get();
     }
 
     public function getById($id)
