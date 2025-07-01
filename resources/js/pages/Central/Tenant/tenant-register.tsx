@@ -116,7 +116,7 @@ export default function TenantRegister({ tenant = null }: iTenantRegisterProps) 
                                         </FormItem>
                                     )}
                                 />
-                                <Button type="submit">Salvar</Button>
+                                <Button variant={"outline"} type="submit">Salvar</Button>
                             </form>
                         </Form>
                     </CardContent>
