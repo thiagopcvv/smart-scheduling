@@ -1,4 +1,4 @@
-import CustomCard from '@/components/custom-card';
+import CardActivity from '@/components/card-activity';
 import { Button } from '@/components/ui/button';
 import { PlaceholderPattern } from '@/components/ui/placeholder-pattern';
 import AppLayout from '@/layouts/app-layout';
@@ -30,7 +30,7 @@ export default function Dashboard() {
                     ) : (
                         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 p-4 justify-items-center">
                             {tenants?.data.map((tenant) => (
-                                <CustomCard
+                                <CardActivity
                                     title={`Tenant id: ${tenant.id}`}
                                     isActive={tenant.active}
                                     onClick={() => router.visit(`admin/tenant-register/${tenant.id}`)}
@@ -40,7 +40,7 @@ export default function Dashboard() {
                                     <p className="text-sm">Criado em: {new Date(tenant.created_at).toLocaleDateString('pt-BR')}</p>
                                     <p className="text-sm">Atualizado em: {new Date(tenant.updated_at).toLocaleDateString('pt-BR')}</p>
                                     <p className="text-sm">Ativo: {tenant.active ? 'Sim' : 'Não'}</p>
-                                </CustomCard>
+                                </CardActivity>
                             ))}
                         </div>
                     )}
