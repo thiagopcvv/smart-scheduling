@@ -1,4 +1,4 @@
-import CustomCard from '@/components/custom-card';
+import CardActivity from '@/components/card-activity';
 import { Button } from '@/components/ui/button';
 import { PlaceholderPattern } from '@/components/ui/placeholder-pattern';
 import AppLayout from '@/layouts/app-layout';
@@ -21,7 +21,7 @@ export default function Dashboard() {
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Dashboard" />
             <div className="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
-                <Button className={'btn max-w-100'} onClick={() => router.visit(route('tenant.register'))}>
+                <Button className={'btn max-w-100 transition-transform duration-300 hover:scale-[1.02]'} onClick={() => router.visit(route('tenant.register'))}>
                     Criar Cliente
                 </Button>
                 <div className="border-sidebar-border/70 dark:border-sidebar-border relative min-h-[100vh] flex-1 overflow-hidden rounded-xl border md:min-h-min">
@@ -30,7 +30,7 @@ export default function Dashboard() {
                     ) : (
                         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 p-4 justify-items-center">
                             {tenants?.data.map((tenant) => (
-                                <CustomCard
+                                <CardActivity
                                     title={`Tenant id: ${tenant.id}`}
                                     isActive={tenant.active}
                                     onClick={() => router.visit(`admin/tenant-register/${tenant.id}`)}
@@ -40,7 +40,7 @@ export default function Dashboard() {
                                     <p className="text-sm">Criado em: {new Date(tenant.created_at).toLocaleDateString('pt-BR')}</p>
                                     <p className="text-sm">Atualizado em: {new Date(tenant.updated_at).toLocaleDateString('pt-BR')}</p>
                                     <p className="text-sm">Ativo: {tenant.active ? 'Sim' : 'Não'}</p>
-                                </CustomCard>
+                                </CardActivity>
                             ))}
                         </div>
                     )}

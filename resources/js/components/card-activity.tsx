@@ -1,9 +1,16 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { ReactNode } from 'react';
 
-export default function CustomCard({ title, children, onClick, isActive = false }) {
+interface iCustomCardProps {
+    title: string;
+    children: ReactNode;
+    onClick: () => void;
+    isActive: boolean;
+}
+
+export default function CardActivity({ title, children, onClick, isActive }: iCustomCardProps) {
     return (
-        <Card onClick={onClick} 
-        className="bg-card w-full transform cursor-pointer transition-transform duration-300 hover:scale-[1.02]">
+        <Card onClick={onClick} className="bg-card w-full transform cursor-pointer transition-transform duration-300 hover:scale-[1.02]">
             <CardHeader>
                 <CardTitle className="flex items-center justify-between gap-2">
                     {title}
