@@ -21,7 +21,7 @@ export default function Dashboard() {
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Dashboard" />
             <div className="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
-                <Button variant={"outline"} className={'btn max-w-100'} onClick={() => router.visit(route('tenant.register'))}>
+                <Button className={'btn max-w-100 transition-transform duration-300 hover:scale-[1.02]'} onClick={() => router.visit(route('tenant.register'))}>
                     Criar Cliente
                 </Button>
                 <div className="border-sidebar-border/70 dark:border-sidebar-border relative min-h-[100vh] flex-1 overflow-hidden rounded-xl border md:min-h-min">

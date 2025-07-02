@@ -116,7 +116,7 @@ export default function TenantRegister({ tenant = null }: iTenantRegisterProps) 
                                         </FormItem>
                                     )}
                                 />
-                                <Button variant={"outline"} type="submit">Salvar</Button>
+                                <Button className={"transition-transform duration-300 hover:scale-[1.02]"} type="submit">Salvar</Button>
                             </form>
                         </Form>
                     </CardContent>
