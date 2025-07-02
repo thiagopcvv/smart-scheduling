@@ -9,6 +9,10 @@ use App\Http\Controllers\Central\TenantController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
+Route::get('/', function (){
+    return redirect()->route('dashboard');
+});
+
 Route::prefix('admin')->group(function () {
 
     Route::middleware(['auth', 'verified'])->group(function () {
