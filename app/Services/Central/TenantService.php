@@ -5,8 +5,13 @@ use App\Repositories\Central\TenantRepository;
 
 class TenantService
 {
-    public function __construct(protected TenantRepository $tenantRepository)
-    {}
+    protected $tenantRepository;
+ 
+    public function __construct()
+    {
+        $this->tenantRepository = resolve(TenantRepository::class);
+    }
+
     public function getAll(){
         return $this->tenantRepository->getAll();
     }

@@ -11,8 +11,12 @@ use App\Models\Central\Tenant;
 
 class TenantController extends Controller
 {
-    public function __construct(protected TenantService $tenantService)
-    {}
+    protected $tenantService;
+
+    public function __construct()
+    {
+        $this->tenantService = resolve(TenantService::class);
+    }
     /**
      * Display a listing of the resource.
      */

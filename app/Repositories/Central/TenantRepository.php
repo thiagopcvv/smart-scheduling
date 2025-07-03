@@ -15,6 +15,7 @@ class TenantRepository{
     {
         return Tenant::where('id', $id)->first();
     }
+
     public function store(array $data): Tenant
     {
         return Tenant::create($data);

@@ -24,8 +24,7 @@ class RouteServiceProvider extends ServiceProvider
             Route::middleware('web')
                 ->domain($domain)
                 ->namespace($this->namespace)
-                ->group(function () {
-                });
+                ->group(base_path('routes/web.php'));
         }
     }
 
@@ -37,8 +36,7 @@ class RouteServiceProvider extends ServiceProvider
             \Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains::class,
         ])
             ->namespace($this->namespace)
-            ->group(base_path('routes/tenants.php'));
-
+            ->group(base_path('routes/tenant.php'));
     }
 
 }
