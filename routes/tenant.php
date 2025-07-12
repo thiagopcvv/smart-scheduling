@@ -20,11 +20,16 @@ use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
 */
 
 Route::middleware([
-   'web',
-   InitializeTenancyByDomain::class,
-   PreventAccessFromCentralDomains::class,
+    'web',
+    InitializeTenancyByDomain::class,
+    PreventAccessFromCentralDomains::class,
 ])->group(function () {
-  Route::prefix('client')->group(function () {
-   Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
-  });
+
+    Route::get('/', function () {
+        return redirect()->route('dashboard-tenant');
+    });
+
+    Route::prefix('client')->group(function () {
+        Route::get('/', [DashboardController::class, 'index'])->name('dashboard-tenant');
+    });
 });
