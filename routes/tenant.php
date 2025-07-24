@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use App\Http\Controllers\Central\DashboardController;
+use App\Http\Controllers\Tenant\DashboardController;
 use Illuminate\Support\Facades\Route;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
@@ -30,6 +30,14 @@ Route::middleware([
     });
 
     Route::prefix('client')->group(function () {
-        Route::get('/', [DashboardController::class, 'index'])->name('dashboard-tenant');
+        Route::middleware(['auth:tenant', 'verified'])->group(function () {
+            Route::get('/', [DashboardController::class, 'index'])->name('dashboard-tenant');
+        });
+
+        Route::middleware('guest:tenant')->group(function () {
+            Route::get('login', [\App\Http\Controllers\Tenant\AuthenticatedSessionController::class, 'create'])->name('tenant-login');
+
+            Route::post('login', [\App\Http\Controllers\Tenant\AuthenticatedSessionController::class, 'store'])->name('tenant-login');
+        });
     });
 });
