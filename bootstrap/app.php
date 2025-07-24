@@ -15,13 +15,13 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
         using: function () {
             $centralDomains = config('tenancy.central_domains');
-    
+
             foreach ($centralDomains as $domain) {
                 Route::middleware('web')
                     ->domain($domain)
                     ->group(base_path('routes/web.php'));
             }
-    
+
             Route::middleware('web')->group(base_path('routes/tenant.php'));
         }
     )
@@ -32,6 +32,10 @@ return Application::configure(basePath: dirname(__DIR__))
             HandleAppearance::class,
             HandleInertiaRequests::class,
             AddLinkHeadersForPreloadedAssets::class,
+        ]);
+
+        $middleware->alias([
+            'tenant.auth' => \App\Http\Middleware\TenantAuthenticate::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
