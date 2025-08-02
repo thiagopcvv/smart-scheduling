@@ -50,7 +50,7 @@ class LoginRequest extends FormRequest
     {
         $this->ensureIsNotRateLimited();
 
-        if (! Auth::attempt($this->only('cpf', 'password'), $this->boolean('remember'))) {
+        if (! Auth::guard('tenant')->attempt($this->only('cpf', 'password'), $this->boolean('remember'))) {
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([
