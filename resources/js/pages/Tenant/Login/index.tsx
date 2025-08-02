@@ -9,6 +9,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import AuthLayout from '@/layouts/auth-layout';
+import { formatCPF } from '@/utils/functions';
 
 type LoginForm = {
     cpf: string;
@@ -49,7 +50,7 @@ export default function Login({ status, canResetPassword }: LoginProps) {
                             autoFocus
                             tabIndex={1}
                             value={data.cpf}
-                            onChange={(e) => setData('cpf', e.target.value)}
+                            onChange={(e) => setData('cpf', formatCPF(e.target.value))}
                             placeholder="123.456.789-10"
                         />
                         <InputError message={errors.cpf} />

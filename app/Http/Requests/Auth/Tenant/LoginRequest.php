@@ -27,7 +27,7 @@ class LoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'cpf' => ['required', 'string', 'email'],
+            'cpf' => ['required', 'string', 'regex:/^\d{3}\.\d{3}\.\d{3}\-\d{2}$/'],
             'password' => ['required', 'string'],
         ];
     }
@@ -36,6 +36,7 @@ class LoginRequest extends FormRequest
     {
         return [
             'cpf.required' => 'O campo CPF é obrigatório.',
+            'cpf.regex' => 'Informe o CPF no formato 000.000.000-00.',
             'password.required' => 'A senha é obrigatória.',
         ];
     }
@@ -53,7 +54,7 @@ class LoginRequest extends FormRequest
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([
-                'email' => __('auth.failed'),
+                'cpf' => __('auth.failed'),
             ]);
         }
 
