@@ -9,9 +9,10 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import AuthLayout from '@/layouts/auth-layout';
+import { formatCPF } from '@/utils/functions';
 
 type LoginForm = {
-    email: string;
+    cpf: string;
     password: string;
     remember: boolean;
 };
@@ -23,7 +24,7 @@ interface LoginProps {
 
 export default function Login({ status, canResetPassword }: LoginProps) {
     const { data, setData, post, processing, errors, reset } = useForm<Required<LoginForm>>({
-        email: '',
+        cpf: '',
         password: '',
         remember: false,
     });
@@ -36,25 +37,23 @@ export default function Login({ status, canResetPassword }: LoginProps) {
     };
 
     return (
-        <AuthLayout title="Entre com sua conta" description="Insira seu email e senha abaixo para entrar na sua conta">
+        <AuthLayout title="Entre com sua conta" description="Insira seu cpf e senha abaixo para entrar na sua conta">
             <Head title="Entrar" />
 
             <form className="flex flex-col gap-6" onSubmit={submit}>
                 <div className="grid gap-6">
                     <div className="grid gap-2">
-                        <Label htmlFor="email">Email</Label>
+                        <Label htmlFor="cpf">Cpf</Label>
                         <Input
-                            id="email"
-                            type="email"
-                            required
+                            id="cpf"
+                            type="cpf"
                             autoFocus
                             tabIndex={1}
-                            autoComplete="email"
-                            value={data.email}
-                            onChange={(e) => setData('email', e.target.value)}
-                            placeholder="email@example.com"
+                            value={data.cpf}
+                            onChange={(e) => setData('cpf', formatCPF(e.target.value))}
+                            placeholder="123.456.789-10"
                         />
-                        <InputError message={errors.email} />
+                        <InputError message={errors.cpf} />
                     </div>
 
                     <div className="grid gap-2">
@@ -69,7 +68,6 @@ export default function Login({ status, canResetPassword }: LoginProps) {
                         <Input
                             id="password"
                             type="password"
-                            required
                             tabIndex={2}
                             autoComplete="current-password"
                             value={data.password}
