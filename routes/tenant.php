@@ -30,7 +30,7 @@ Route::middleware([
     });
 
     Route::prefix('client')->group(function () {
-        Route::middleware(['auth:tenant', 'verified'])->group(function () {
+        Route::middleware(['tenant.auth', 'verified'])->group(function () {
             Route::get('/', [DashboardController::class, 'index'])->name('dashboard-tenant');
         });
 

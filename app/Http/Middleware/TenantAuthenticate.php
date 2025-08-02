@@ -24,7 +24,7 @@ class TenantAuthenticate extends Middleware
         $this->unauthenticated($request, $guards);
     }
 
-    protected function redirectTo($request)
+    protected function redirectTo(Request $request)
     {
         if (!$request->expectsJson()) {
             return route('tenant-login'); // ou a rota de login do tenant
