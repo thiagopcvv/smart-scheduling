@@ -18,7 +18,7 @@ class AuthenticatedSessionController extends Controller
     public function create(Request $request): Response
     {
         return Inertia::render('Tenant/Login/index', [
-            'canResetPassword' =>false,
+            'canResetPassword' => false,
             'status' => $request->session()->get('status'),
         ]);
     }
@@ -40,7 +40,7 @@ class AuthenticatedSessionController extends Controller
      */
     public function destroy(Request $request): RedirectResponse
     {
-        Auth::guard('web')->logout();
+        Auth::guard('tenant')->logout();
 
         $request->session()->invalidate();
         $request->session()->regenerateToken();

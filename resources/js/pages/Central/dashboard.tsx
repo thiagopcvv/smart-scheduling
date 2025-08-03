@@ -1,7 +1,7 @@
 import CardActivity from '@/components/card-activity';
 import { Button } from '@/components/ui/button';
 import { PlaceholderPattern } from '@/components/ui/placeholder-pattern';
-import AppLayout from '@/layouts/app-layout';
+import AppLayout from '@/layouts/Central/app-layout';
 import { type BreadcrumbItem } from '@/types';
 import { iTenantObject } from '@/types/tenant';
 import { Head, router, usePage } from '@inertiajs/react';
