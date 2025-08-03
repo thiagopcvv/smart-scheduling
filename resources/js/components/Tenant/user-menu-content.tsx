@@ -11,7 +11,6 @@ interface UserMenuContentProps {
 
 export function UserMenuContent({ user }: UserMenuContentProps) {
     const cleanup = useMobileNavigation();
-
     return (
         <>
             <DropdownMenuLabel className="p-0 font-normal">
@@ -22,7 +21,7 @@ export function UserMenuContent({ user }: UserMenuContentProps) {
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
                 <DropdownMenuItem asChild>
-                    <Link className="block w-full" href={route('profile.edit')} as="button" prefetch onClick={cleanup}>
+                    <Link className="block w-full" href={route('tenant-profile')} as="button" prefetch onClick={cleanup}>
                         <Settings className="mr-2" />
                         Confirgurações
                     </Link>
@@ -30,7 +29,7 @@ export function UserMenuContent({ user }: UserMenuContentProps) {
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuItem asChild>
-                <Link className="block w-full" method="post" href={route('logout')} as="button" onClick={cleanup}>
+                <Link className="block w-full" method="post" href={route('tenant-logout')} as="button" onClick={cleanup}>
                     <LogOut className="mr-2" />
                     Sair
                 </Link>

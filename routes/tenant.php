@@ -32,7 +32,11 @@ Route::middleware([
     Route::prefix('client')->group(function () {
         Route::middleware(['tenant.auth', 'verified'])->group(function () {
             Route::get('/', [DashboardController::class, 'index'])->name('dashboard-tenant');
+            Route::get('settings/profile', [\App\Http\Controllers\Tenant\ProfileController::class, 'edit'])->name('tenant-profile');
         });
+
+        Route::post('logout', [\App\Http\Controllers\Tenant\AuthenticatedSessionController::class, 'destroy'])->name('tenant-logout');
+
 
         Route::middleware('guest:tenant')->group(function () {
             Route::get('login', [\App\Http\Controllers\Tenant\AuthenticatedSessionController::class, 'create'])->name('tenant-login');
