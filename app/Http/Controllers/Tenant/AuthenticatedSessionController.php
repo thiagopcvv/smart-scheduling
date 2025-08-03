@@ -18,7 +18,7 @@ class AuthenticatedSessionController extends Controller
     public function create(Request $request): Response
     {
         return Inertia::render('Tenant/Login/index', [
-            'canResetPassword' =>false,
+            'canResetPassword' => false,
             'status' => $request->session()->get('status'),
         ]);
     }
