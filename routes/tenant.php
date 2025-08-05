@@ -43,7 +43,6 @@ Route::middleware([
 
         Route::middleware('guest:tenant')->group(function () {
             Route::get('login', [\App\Http\Controllers\Tenant\AuthenticatedSessionController::class, 'create'])->name('tenant-login');
-
             Route::post('login', [\App\Http\Controllers\Tenant\AuthenticatedSessionController::class, 'store'])->name('tenant-login');
         });
     });
