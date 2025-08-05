@@ -33,12 +33,12 @@ Route::middleware([
         Route::middleware(['tenant.auth', 'verified'])->group(function () {
             Route::get('/', [DashboardController::class, 'index'])->name('dashboard-tenant');
             Route::get('settings/profile', [\App\Http\Controllers\Tenant\ProfileController::class, 'edit'])->name('tenant-profile');
+            Route::patch('settings/profile', [\App\Http\Controllers\Tenant\ProfileController::class, 'update'])->name('tenant-profile.update');
             Route::get('settings/appearance', function () {
                 return \Inertia\Inertia::render('Tenant/Settings/appearance');
             })->name('tenant-appearance');
             Route::post('logout', [\App\Http\Controllers\Tenant\AuthenticatedSessionController::class, 'destroy'])->name('tenant-logout');
         });
-
 
 
         Route::middleware('guest:tenant')->group(function () {

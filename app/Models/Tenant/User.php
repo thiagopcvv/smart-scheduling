@@ -22,6 +22,8 @@ class User extends Authenticatable
         'login',
         'password',
         'ativo',
+        'email',
+        'email_verified_at',
     ];
 
     /**

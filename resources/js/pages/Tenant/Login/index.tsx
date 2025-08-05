@@ -36,7 +36,7 @@ export default function Login({ status, canResetPassword }: LoginProps) {
         }
         data.cpf = removePoints(data.cpf);
         post(route('tenant-login'), {
-            onFinish: () => reset('password'),
+            onFinish: () => reset('password', 'cpf'),
         });
     };
 
