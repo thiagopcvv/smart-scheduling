@@ -11,15 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('cpf')->nullable();
-            $table->string('password');
-            $table->boolean('ativo')->default(true);
-            $table->string('login')->nullable();
+        Schema::table('users', function (Blueprint $table) {
             $table->rememberToken();
-            $table->softDeletes();
         });
     }
 
@@ -28,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn('remember_token');
+        });
     }
 };

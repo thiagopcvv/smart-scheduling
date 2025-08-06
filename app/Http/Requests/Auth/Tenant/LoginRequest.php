@@ -27,7 +27,7 @@ class LoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'cpf' => ['required', 'string', 'regex:/^\d{3}\.\d{3}\.\d{3}\-\d{2}$/'],
+            'cpf' => ['required', 'string'],
             'password' => ['required', 'string'],
         ];
     }

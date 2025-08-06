@@ -9,7 +9,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import AuthLayout from '@/layouts/Tenants/auth-layout';
-import { formatCPF } from '@/utils/functions';
+import { maskCpf } from '@/utils/masks';
 
 type LoginForm = {
     cpf: string;
@@ -31,8 +31,12 @@ export default function Login({ status, canResetPassword }: LoginProps) {
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
+        const removePoints = (value: string) => {
+            return value.replace(/[.-]/g, "");
+        }
+        data.cpf = removePoints(data.cpf);
         post(route('tenant-login'), {
-            onFinish: () => reset('password'),
+            onFinish: () => reset('password', 'cpf'),
         });
     };
 
@@ -50,9 +54,9 @@ export default function Login({ status, canResetPassword }: LoginProps) {
                             autoFocus
                             tabIndex={1}
                             value={data.cpf}
-                            onChange={(e) => setData('cpf', formatCPF(e.target.value))}
+                            onChange={(e) => setData('cpf', maskCpf(e.target.value))}
                             placeholder="123.456.789-10"
-                        />
+                        />  
                         <InputError message={errors.cpf} />
                     </div>
 
