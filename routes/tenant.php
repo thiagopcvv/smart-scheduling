@@ -38,6 +38,8 @@ Route::middleware([
                 return \Inertia\Inertia::render('Tenant/Settings/appearance');
             })->name('tenant-appearance');
             Route::post('logout', [\App\Http\Controllers\Tenant\AuthenticatedSessionController::class, 'destroy'])->name('tenant-logout');
+            Route::get('settings/password', [\App\Http\Controllers\Tenant\PasswordController::class, 'edit'])->name('tenant-password.edit');
+            Route::put('settings/password', [\App\Http\Controllers\Tenant\PasswordController::class, 'update'])->name('tenant-password.update');
         });
 
 
