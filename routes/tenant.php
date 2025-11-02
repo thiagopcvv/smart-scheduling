@@ -41,7 +41,11 @@ Route::middleware([
             Route::get('settings/password', [\App\Http\Controllers\Tenant\PasswordController::class, 'edit'])->name('tenant-password.edit');
             Route::put('settings/password', [\App\Http\Controllers\Tenant\PasswordController::class, 'update'])->name('tenant-password.update');
 
-            Route::get('users', [\App\Http\Controllers\Tenant\UsersController::class, 'index'])->name('tenant-users');
+            Route::prefix('users')->group(function () {
+                Route::get('/', [\App\Http\Controllers\Tenant\UsersController::class, 'index'])->name('tenant-users');
+                Route::get('create', [\App\Http\Controllers\Tenant\UsersController::class, 'create'])->name('tenant-users.create');
+                Route::delete('/delete', [\App\Http\Controllers\Tenant\UsersController::class, 'index'])->name('tenant-users.delete');
+            });
         });
 
 
