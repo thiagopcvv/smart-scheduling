@@ -43,8 +43,7 @@ Route::middleware([
 
             Route::prefix('users')->group(function () {
                 Route::get('/', [\App\Http\Controllers\Tenant\UsersController::class, 'index'])->name('tenant-users');
-                Route::get('create', [\App\Http\Controllers\Tenant\UsersController::class, 'create'])->name('tenant-users.create');
-                Route::delete('/delete', [\App\Http\Controllers\Tenant\UsersController::class, 'index'])->name('tenant-users.delete');
+                Route::delete('/delete/{id}', [\App\Http\Controllers\Tenant\UsersController::class, 'delete'])->name('tenant-users.delete');
             });
         });
 

@@ -5,6 +5,7 @@ import { User } from '@/types/user';
 import { router } from '@inertiajs/react';
 import { ColumnDef } from '@tanstack/react-table';
 import { MoreHorizontal, Pencil, Trash2 } from 'lucide-react';
+import { toast } from 'sonner';
 
 const handleEdit = (id: number) => {
     router.visit(route('tenant-users.edit', id));
@@ -12,9 +13,16 @@ const handleEdit = (id: number) => {
 
 const handleDelete = (id: number) => {
     if (confirm('Tem certeza que deseja excluir este usuário?')) {
-        const response = router.delete(route('tenant-users.delete', id));
-
-        console.log('response: ', response);
+        router.delete(route('tenant-users.delete', id), {
+            preserveScroll: true,
+            onSuccess: () => {
+                toast.success('Usuário excluído com sucesso!');
+            },
+            onError: (errors) => {
+                toast.error('Erro ao excluir usuário');
+                console.error(errors);
+            },
+        });
     }
 };
 

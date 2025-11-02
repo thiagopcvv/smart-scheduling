@@ -1,11 +1,8 @@
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
+import { Card, CardHeader, CardTitle } from '@/components/ui/card';
 import AppLayout from '@/layouts/Tenants/app-layout';
 import { type BreadcrumbItem } from '@/types';
 import { User } from '@/types/user';
 import { Head, router, usePage } from '@inertiajs/react';
-import { PlusCircle, Search } from 'lucide-react';
 import { TableUsers } from './components/table';
 
 type PageProps = {
