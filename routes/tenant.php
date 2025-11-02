@@ -40,6 +40,8 @@ Route::middleware([
             Route::post('logout', [\App\Http\Controllers\Tenant\AuthenticatedSessionController::class, 'destroy'])->name('tenant-logout');
             Route::get('settings/password', [\App\Http\Controllers\Tenant\PasswordController::class, 'edit'])->name('tenant-password.edit');
             Route::put('settings/password', [\App\Http\Controllers\Tenant\PasswordController::class, 'update'])->name('tenant-password.update');
+
+            Route::get('users', [\App\Http\Controllers\Tenant\UsersController::class, 'index'])->name('tenant-users');
         });
 
 

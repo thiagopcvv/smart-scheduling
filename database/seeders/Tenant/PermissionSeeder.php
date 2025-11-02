@@ -48,6 +48,11 @@ class PermissionSeeder extends Seeder
                 'guard_name' => 'tenant',
                 'description' => 'Permite ativar/inativar usuários dos sistemas.',
             ],
+            [
+                'name' => 'usuarios',
+                'guard_name' => 'tenant',
+                'description' => 'Acesso à tela de usuário do sistema.'
+            ]
         ];
 
         foreach ($roles as $role) {
