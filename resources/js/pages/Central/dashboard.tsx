@@ -33,7 +33,7 @@ export default function Dashboard() {
                                 <CardActivity
                                     title={`Tenant id: ${tenant.id}`}
                                     isActive={tenant.active}
-                                    onClick={() => router.visit(`admin/tenant-register/${tenant.id}`)}
+                                    onClick={() => router.visit(`/admin/tenant-register/${tenant.id}`)}
                                     key={tenant.id}
                                 >
                                     <p className="text-sm">Nome: {tenant.name}</p>

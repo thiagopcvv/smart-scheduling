@@ -3,7 +3,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Checkbox } from '@/components/ui/checkbox';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import AppLayout from '@/layouts/Tenants/app-layout';
+import AppLayout from '@/layouts/Central/app-layout';
 import { BreadcrumbItem } from '@/types';
 import { iTenantObject } from '@/types/tenant';
 import { zodResolver } from '@hookform/resolvers/zod';
