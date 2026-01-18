@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Tenant;
 
 use App\Http\Controllers\Controller;
+use App\Models\Tenant\User;
 use App\Services\Tenant\UserService;
 use Inertia\Inertia;
 
@@ -20,6 +21,11 @@ class UsersController extends Controller
         $users = $this->service->getAll();
 
         return Inertia::render('Tenant/Users/index', ['users' => $users]);
+    }
+
+    public function edit(User $user)
+    {
+        return Inertia::render('Tenant/Users/create', ['user' => $user]);
     }
 
     public function delete($id,)

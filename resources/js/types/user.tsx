@@ -4,6 +4,7 @@ export type User = {
     login: string;
     email: string;
     ativo: boolean;
+    cpf:  string;
 };
 
 
