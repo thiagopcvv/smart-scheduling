@@ -22,9 +22,10 @@ import { columns } from './table-columns';
 
 interface TableUsersProps {
     users: User[];
+    permissions: string[];
 }
 
-export function TableUsers({ users }: TableUsersProps) {
+export function TableUsers({ users, permissions }: TableUsersProps) {
     const [sorting, setSorting] = useState<SortingState>([]);
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
     const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
