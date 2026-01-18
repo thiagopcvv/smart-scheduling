@@ -40,6 +40,11 @@ Route::middleware([
             Route::post('logout', [\App\Http\Controllers\Tenant\AuthenticatedSessionController::class, 'destroy'])->name('tenant-logout');
             Route::get('settings/password', [\App\Http\Controllers\Tenant\PasswordController::class, 'edit'])->name('tenant-password.edit');
             Route::put('settings/password', [\App\Http\Controllers\Tenant\PasswordController::class, 'update'])->name('tenant-password.update');
+
+            Route::prefix('users')->group(function () {
+                Route::get('/', [\App\Http\Controllers\Tenant\UsersController::class, 'index'])->name('tenant-users');
+                Route::delete('/delete/{id}', [\App\Http\Controllers\Tenant\UsersController::class, 'delete'])->name('tenant-users.delete');
+            });
         });
 
 

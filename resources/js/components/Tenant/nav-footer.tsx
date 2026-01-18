@@ -1,8 +1,8 @@
+import AppearanceNavFooter from '@/components/appearence-nav-footer';
 import { Icon } from '@/components/icon';
 import { SidebarGroup, SidebarGroupContent, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
 import { type NavItem } from '@/types';
 import { type ComponentPropsWithoutRef } from 'react';
-
 export function NavFooter({
     items,
     className,
@@ -27,6 +27,14 @@ export function NavFooter({
                             </SidebarMenuButton>
                         </SidebarMenuItem>
                     ))}
+                    <SidebarMenuItem className="mt-2">
+                        <SidebarMenuButton
+                            asChild
+                            className="text-neutral-600 hover:text-neutral-800 dark:text-neutral-300 dark:hover:text-neutral-100"
+                        >
+                            <AppearanceNavFooter className="w-full justify-center" />
+                        </SidebarMenuButton>
+                    </SidebarMenuItem>
                 </SidebarMenu>
             </SidebarGroupContent>
         </SidebarGroup>

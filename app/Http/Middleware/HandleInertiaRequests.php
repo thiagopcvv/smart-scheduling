@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Inertia\Middleware;
 use Tighten\Ziggy\Ziggy;
@@ -24,7 +25,7 @@ class HandleInertiaRequests extends Middleware
      *
      * @see https://inertiajs.com/asset-versioning
      */
-    public function version(Request $request): ?string
+    public function version(Request $request,): ?string
     {
         return parent::version($request);
     }
@@ -36,8 +37,10 @@ class HandleInertiaRequests extends Middleware
      *
      * @return array<string, mixed>
      */
-    public function share(Request $request): array
+    public function share(Request $request,): array
     {
+        $user = Auth::user();
+        $permissions = $user ? $user->getAllPermissions()->pluck('name')->toArray() : [];
         [$message, $author] = str(Inspiring::quotes()->random())->explode('-');
 
         return [
@@ -47,17 +50,18 @@ class HandleInertiaRequests extends Middleware
             'auth' => [
                 'user' => $request->user(),
             ],
-            'ziggy' => fn (): array => [
+            'ziggy' => fn(): array => [
                 ...(new Ziggy)->toArray(),
                 'location' => $request->url(),
             ],
             'sidebarOpen' => $request->cookie('sidebar_state') === 'true',
             'flash' => [
-                'success' => fn () => Session::get('success'),
-                'error' => fn () => Session::get('error'),
-                'info' => fn () => Session::get('info'),
-                'warning' => fn () => Session::get('warning'),
+                'success' => fn() => Session::get('success'),
+                'error' => fn() => Session::get('error'),
+                'info' => fn() => Session::get('info'),
+                'warning' => fn() => Session::get('warning'),
             ],
+            'permissions' => $permissions,
         ];
     }
 }

@@ -13,6 +13,16 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        User::insert(['name' => "Thiago Pires de Castro do Valle", "login" => "03549637160", "password" => Hash::make("123456"), "cpf" => "03549637160", 'ativo' => true]);
+        User::firstOrCreate(
+            [
+                "login" => "03549637160",
+                "email" => "thiagopiresdovalle@gmail.com"
+            ],
+            [
+                "name" => "Thiago Pires de Castro do Valle",
+                "password" => Hash::make("123456"),
+                "cpf" => "03549637160",
+                'ativo' => true,
+            ]);
     }
 }
