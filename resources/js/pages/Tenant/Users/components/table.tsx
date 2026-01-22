@@ -19,20 +19,31 @@ import {
 import { PlusCircle, Search } from 'lucide-react';
 import { useState } from 'react';
 import { columns } from './table-columns';
+import { LaravelPaginator } from '@/types';
 
 interface TableUsersProps {
-    users: User[];
-    permissions: string[];
+    users: LaravelPaginator<User>;
 }
 
-export function TableUsers({ users, permissions }: TableUsersProps) {
+type Filters = {
+    search?: string;
+    pagination?: number;
+    page?: number;
+};
+
+export function TableUsers({ users }: TableUsersProps) {
     const [sorting, setSorting] = useState<SortingState>([]);
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
     const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
     const [rowSelection, setRowSelection] = useState({});
+    const [filters, setFilters] = useState<Filters>({
+        search: '',
+        pagination: users.per_page,
+        page: users.current_page,
+    });
 
     const table = useReactTable({
-        data: users,
+        data: users.data,
         columns,
         onSortingChange: setSorting,
         onColumnFiltersChange: setColumnFilters,
@@ -50,6 +61,24 @@ export function TableUsers({ users, permissions }: TableUsersProps) {
         },
     });
 
+    const applyFilters = (newFilters: Filters) => {
+        const params: Filters = { ...filters, ...newFilters };
+
+
+        Object.entries(params).forEach(([key, value]) => {
+            if (!value) {
+                delete params[key as keyof Filters];
+            }
+        });
+
+        setFilters(params);
+
+        router.get('/client/users', params, {
+            preserveState: true,
+            preserveScroll: true,
+        });
+    };
+
     const handleCreate = () => {
         router.visit(route('tenant-users.create'));
     };
@@ -63,7 +92,10 @@ export function TableUsers({ users, permissions }: TableUsersProps) {
                         <Input
                             placeholder="Buscar por nome..."
                             value={(table.getColumn('name')?.getFilterValue() as string) ?? ''}
-                            onChange={(event) => table.getColumn('name')?.setFilterValue(event.target.value)}
+                            onChange={(event) => {
+                                table.getColumn('name')?.setFilterValue(event.target.value);
+                                applyFilters({ search: event.target.value });
+                            }}
                             className="max-w-sm pl-8"
                         />
                     </div>

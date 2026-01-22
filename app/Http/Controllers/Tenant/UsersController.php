@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Tenant;
 use App\Http\Controllers\Controller;
 use App\Models\Tenant\User;
 use App\Services\Tenant\UserService;
+use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class UsersController extends Controller
@@ -16,9 +17,9 @@ class UsersController extends Controller
         $this->service = resolve(UserService::class);
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $users = $this->service->getAll();
+        $users = $this->service->getAll($request->all());
 
         return Inertia::render('Tenant/Users/index', ['users' => $users]);
     }

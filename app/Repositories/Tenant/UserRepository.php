@@ -9,7 +9,7 @@ class UserRepository
 {
     public function getAll()
     {
-        return User::orderBy('created_at', 'desc')->get();
+        return User::orderBy('created_at', 'desc');
     }
 
     public function getById($id,)
