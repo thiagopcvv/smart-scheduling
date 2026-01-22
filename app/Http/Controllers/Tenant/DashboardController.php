@@ -9,6 +9,8 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        return Inertia::render('Tenant/Dashboard/index', []);
+
+        $permissions = auth()->user()->getAllPermissions()->pluck('name');
+        return Inertia::render('Tenant/Dashboard/index', ['permissions' => $permissions ?? []]);
     }
 }
