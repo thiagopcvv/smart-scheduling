@@ -47,7 +47,6 @@ export function AppSidebar({ permissions }: { permissions?: string[] }) {
     const newItems = navItemPermissions.filter((item) => item.permission?.some((p) => permissions?.includes(p)));
     const navItems: NavItem[] = [...mainNavItems, ...newItems]
 
-    console.log(navItems)
     return (
         <Sidebar collapsible="icon" variant="inset">
             <SidebarHeader>
