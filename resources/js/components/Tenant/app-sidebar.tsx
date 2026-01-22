@@ -2,8 +2,8 @@ import { NavFooter } from '@/components/Tenant/nav-footer';
 import { NavMain } from '@/components/Tenant/nav-main';
 import { NavUser } from '@/components/Tenant/nav-user';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
-import { type NavItem } from '@/types';
-import { Link } from '@inertiajs/react';
+import { type NavItem, SharedData } from '@/types';
+import { Link, usePage } from '@inertiajs/react';
 import { BookOpen, Folder, LayoutGrid, ShieldIcon, UserCog } from 'lucide-react';
 import AppLogo from '../app-logo';
 
@@ -33,7 +33,7 @@ const navItemPermissions: NavItem[] = [
         title: 'Usuários',
         icon: UserCog,
         permission: ['usuarios'],
-        href: 'tenant-users',
+        href: '/client/users',
     },
     {
         title: 'Permissões',
@@ -43,7 +43,10 @@ const navItemPermissions: NavItem[] = [
     },
 ];
 
-export function AppSidebar({ permissions }: { permissions?: string[] }) {
+export function AppSidebar() {
+    const { props } = usePage<SharedData>();
+    const permissions: string[] = props?.auth?.user?.permissions ?? [];
+
     const newItems = navItemPermissions.filter((item) => item.permission?.some((p) => permissions?.includes(p)));
     const navItems: NavItem[] = [...mainNavItems, ...newItems]
 
