@@ -25,7 +25,6 @@ const breadcrumbs: BreadcrumbItem[] = [
 ];
 
 export default function Users({ users }: UserProps) {
-    const { props } = usePage<PageProps>();
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
