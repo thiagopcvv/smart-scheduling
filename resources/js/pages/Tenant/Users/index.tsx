@@ -1,6 +1,6 @@
 import { Card, CardHeader, CardTitle } from '@/components/ui/card';
 import AppLayout from '@/layouts/Tenants/app-layout';
-import { type BreadcrumbItem } from '@/types';
+import { type BreadcrumbItem, LaravelPaginator } from '@/types';
 import { User } from '@/types/user';
 import { Head, usePage } from '@inertiajs/react';
 import { TableUsers } from './components/table';
@@ -10,7 +10,7 @@ type PageProps = {
 };
 
 type UserProps = {
-    users: User[];
+    users: LaravelPaginator<User>;
 };
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -26,7 +26,6 @@ const breadcrumbs: BreadcrumbItem[] = [
 
 export default function Users({ users }: UserProps) {
     const { props } = usePage<PageProps>();
-    const permissions: string[] = props?.permissions ?? [];
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
@@ -36,7 +35,7 @@ export default function Users({ users }: UserProps) {
                     <CardHeader>
                         <CardTitle className="text-2xl font-bold">Gerenciamento de Usuários</CardTitle>
                     </CardHeader>
-                    <TableUsers users={users} permissions={permissions} />
+                    <TableUsers users={users} />
                 </Card>
             </div>
         </AppLayout>
