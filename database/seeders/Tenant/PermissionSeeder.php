@@ -52,6 +52,11 @@ class PermissionSeeder extends Seeder
                 'name' => 'usuarios',
                 'guard_name' => 'tenant',
                 'description' => 'Acesso à tela de usuário do sistema.'
+            ],
+            [
+                'name' => 'permissions',
+                'guard_name' => 'tenant',
+                'description' => 'Gerenciar permissões do sistema.'
             ]
         ];
 
