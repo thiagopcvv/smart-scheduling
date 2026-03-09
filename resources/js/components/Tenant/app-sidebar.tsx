@@ -2,9 +2,9 @@ import { NavFooter } from '@/components/Tenant/nav-footer';
 import { NavMain } from '@/components/Tenant/nav-main';
 import { NavUser } from '@/components/Tenant/nav-user';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
-import { type NavItem } from '@/types';
-import { Link } from '@inertiajs/react';
-import { BookOpen, Folder, LayoutGrid } from 'lucide-react';
+import { type NavItem, SharedData } from '@/types';
+import { Link, usePage } from '@inertiajs/react';
+import { BookOpen, Folder, LayoutGrid, ShieldIcon, UserCog } from 'lucide-react';
 import AppLogo from '../app-logo';
 
 const mainNavItems: NavItem[] = [
@@ -16,19 +16,40 @@ const mainNavItems: NavItem[] = [
 ];
 
 const footerNavItems: NavItem[] = [
+    // {
+    //     title: 'Repositories',
+    //     href: 'https://github.com/laravel/react-starter-kit',
+    //     icon: Folder,
+    // },
+    // {
+    //     title: 'Documentation',
+    //     href: 'https://laravel.com/docs/starter-kits',
+    //     icon: BookOpen,
+    // },
+];
+
+const navItemPermissions: NavItem[] = [
     {
-        title: 'Repositories',
-        href: 'https://github.com/laravel/react-starter-kit',
-        icon: Folder,
+        title: 'Usuários',
+        icon: UserCog,
+        permission: ['usuarios'],
+        href: '/client/users',
     },
     {
-        title: 'Documentation',
-        href: 'https://laravel.com/docs/starter-kits',
-        icon: BookOpen,
+        title: 'Permissões',
+        icon: ShieldIcon,
+        permission: ['permissions'],
+        href: '/client/permissions',
     },
 ];
 
 export function AppSidebar() {
+    const { props } = usePage<SharedData>();
+    const permissions: string[] = props?.auth?.user?.permissions ?? [];
+
+    const newItems = navItemPermissions.filter((item) => item.permission?.some((p) => permissions?.includes(p)));
+    const navItems: NavItem[] = [...mainNavItems, ...newItems]
+
     return (
         <Sidebar collapsible="icon" variant="inset">
             <SidebarHeader>
@@ -44,7 +65,7 @@ export function AppSidebar() {
             </SidebarHeader>
 
             <SidebarContent>
-                <NavMain items={mainNavItems} />
+                <NavMain items={navItems} />
             </SidebarContent>
 
             <SidebarFooter>

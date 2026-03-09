@@ -54,7 +54,7 @@ class LoginRequest extends FormRequest
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([
-                'cpf' => __('auth.failed'),
+                'cpf' => "CPF ou senha inválidos",
             ]);
         }
 

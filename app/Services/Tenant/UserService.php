@@ -13,17 +13,12 @@ class UserService
         $this->repository = resolve(UserRepository::class);
     }
 
-    public function getAll()
+    public function getAll($filters)
     {
-        return $this->repository->getAll()->map(function ($user) {
-            return [
-                'id' => $user->id,
-                'name' => $user->name,
-                'email' => $user->email,
-                'ativo' => $user->ativo,
-                'login' => $user->login,
-            ];
-        });
+        if (data_get($filters, 'pagination')) {
+            return $this->repository->getAll()->filterBy($filters)->paginate($filters['pagination']);
+        }
+        return $this->repository->getAll()->filterBy($filters)->paginate(10);
     }
 
     public function get($id)
