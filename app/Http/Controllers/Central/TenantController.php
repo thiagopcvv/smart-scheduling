@@ -47,9 +47,9 @@ class TenantController extends Controller
     {
         try {
             $data = $request->all();
- 
+
             $this->tenantService->update($data);
- 
+
              return redirect()->route('dashboard')->with('success', 'Cliente atualizado com sucesso.');
          } catch (\Exception $e) {
              return redirect()->route('tenant.update')->with('error', 'Erro ao editar cliente');
