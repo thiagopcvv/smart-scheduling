@@ -45,9 +45,9 @@ Route::middleware([
                 Route::get('/', [\App\Http\Controllers\Tenant\UsersController::class, 'index'])->name('tenant-users');
                 Route::get('/edit/{user}', [\App\Http\Controllers\Tenant\UsersController::class, 'edit'])->name('tenant-users.edit');
                 Route::delete('/delete/{id}', [\App\Http\Controllers\Tenant\UsersController::class, 'delete'])->name('tenant-users.delete');
+                Route::post('/update/{id}', [\App\Http\Controllers\Tenant\UsersController::class, 'update'])->name('tenant-users.update');
             });
         });
-
 
         Route::middleware('guest:tenant')->group(function () {
             Route::get('login', [\App\Http\Controllers\Tenant\AuthenticatedSessionController::class, 'create'])->name('tenant-login');

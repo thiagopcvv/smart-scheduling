@@ -21,8 +21,6 @@ return Application::configure(basePath: dirname(__DIR__))
                     ->domain($domain)
                     ->group(base_path('routes/web.php'));
             }
-
-            Route::middleware('web')->group(base_path('routes/tenant.php'));
         }
     )
     ->withMiddleware(function (Middleware $middleware) {

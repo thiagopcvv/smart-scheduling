@@ -29,6 +29,15 @@ class UsersController extends Controller
         return Inertia::render('Tenant/Users/create', ['user' => $user]);
     }
 
+    public function update(Request $request, User $user)
+    {
+        $data = $request->all();
+
+        $user->update($data);
+
+        return redirect()->route('tenant-users')->with('success', 'User atualizado com sucesso.');
+    }
+
     public function delete($id,)
     {
         try {

@@ -35,8 +35,8 @@ type UserFormProps = {
     user?: User;
 };
 
-export function UserForm({ user }: UserFormProps) {
-    const isEditing = !!user;
+function UserForm({ user }: UserFormProps) {
+    const isEditing = user?.id;
 
     const form = useForm<UserFormValues>({
         resolver: zodResolver(userFormSchema),
@@ -50,20 +50,8 @@ export function UserForm({ user }: UserFormProps) {
     });
 
     const onSubmit = (data: UserFormValues) => {
-        const url = isEditing ? `/client/users/${user.id}` : '/client/users';
-        const method = isEditing ? 'put' : 'post';
-
-        // Remove password se estiver vazio na edição
-        const submitData = { ...data };
-        if (isEditing && !submitData.password) {
-            delete submitData.password;
-        }
-
-        router[method](url, submitData, {
-            onSuccess: () => {
-                router.visit('/client/users');
-            },
-        });
+        const url = isEditing ? 'tenant-users.update' : 'tenant-users.update';
+        router.post(route(url, user?.id), data);
     };
 
     return (
@@ -157,3 +145,5 @@ export function UserForm({ user }: UserFormProps) {
         </Form>
     );
 }
+
+export default UserForm;

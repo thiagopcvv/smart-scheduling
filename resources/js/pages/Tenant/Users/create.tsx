@@ -2,7 +2,7 @@ import AppLayout from '@/layouts/Tenants/app-layout';
 import { type BreadcrumbItem } from '@/types';
 import { User } from '@/types/user';
 import { Head } from '@inertiajs/react';
-import { UserForm } from './components/user-form';
+import UserForm from './components/user-form';
 
 type UserProps = {
     user: User;
