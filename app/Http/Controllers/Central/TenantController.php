@@ -34,6 +34,7 @@ class TenantController extends Controller
 
             return redirect()->route('dashboard')->with('success', 'Cliente criado com sucesso.');
         } catch (\Exception $e) {
+            dd($e);
             return redirect()->route('tenant.register')->with('error', 'Erro ao criar cliente');
         }
     }
