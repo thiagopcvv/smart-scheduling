@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Tenant;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Users\Tenant\UserUpdateRequest;
 use App\Models\Tenant\User;
 use App\Services\Tenant\UserService;
 use Illuminate\Http\Request;
@@ -29,16 +30,16 @@ class UsersController extends Controller
         return Inertia::render('Tenant/Users/create', ['user' => $user]);
     }
 
-    public function update(Request $request, User $user)
+    public function update(UserUpdateRequest $request, User $user)
     {
-        $data = $request->all();
+        $data = $request->validated();
 
         $user->update($data);
 
         return redirect()->route('tenant-users')->with('success', 'User atualizado com sucesso.');
     }
 
-    public function delete($id,)
+    public function delete($id)
     {
         try {
             $this->service->delete($id);

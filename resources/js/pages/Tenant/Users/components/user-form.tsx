@@ -95,9 +95,7 @@ function UserForm({ user }: UserFormProps) {
                                 <FormControl>
                                     <Input placeholder="000.000.000-00"
                                            {...field}
-                                           maxLength={14}
-                                           onChange={(e) =>
-                                               field.onChange(maskCpf(e.target.value))} />
+                                           maxLength={11} />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
