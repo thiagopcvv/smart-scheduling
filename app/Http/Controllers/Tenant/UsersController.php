@@ -33,7 +33,6 @@ class UsersController extends Controller
     public function update(UserUpdateRequest $request, User $user)
     {
         $data = $request->validated();
-
         $user->update($data);
 
         return redirect()->route('tenant-users')->with('success', 'User atualizado com sucesso.');

@@ -45,7 +45,6 @@ function UserForm({ user }: UserFormProps) {
             email: user?.email || '',
             cpf: user?.cpf || '',
             login: user?.login || '',
-            password: '',
         },
     });
 
