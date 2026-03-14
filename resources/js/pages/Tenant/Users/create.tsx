@@ -26,7 +26,7 @@ const breadcrumbs: BreadcrumbItem[] = [
 export default function Create({ user }: UserProps) {
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
-            <Head title="Editar Usuário" />
+            <Head title={user ? 'Editar Usuário' : 'Criar Usuário'} />
             <div className="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
                 <UserForm user={user} />
             </div>

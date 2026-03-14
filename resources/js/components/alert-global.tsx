@@ -22,33 +22,40 @@ const titleMap = {
     warning: 'Aviso',
     info: 'Informação',
 };
-
 export function AlertGlobal() {
-    const { flash } = usePage().props;
+    const { flash, errors } = usePage().props as any;
+
     const [visible, setVisible] = useState(false);
     const [exiting, setExiting] = useState(false);
     const [type, setType] = useState<FlashType | null>(null);
     const [message, setMessage] = useState('');
 
     useEffect(() => {
-        const entry = Object.entries(flash).find(([_, msg]) => msg !== null);
+        const flashEntry = Object.entries(flash).find(([_, msg]) => msg !== null);
 
-        if (entry) {
-            const [flashType, flashMessage] = entry as [FlashType, string];
+        if (flashEntry) {
+            const [flashType, flashMessage] = flashEntry as [FlashType, string];
             setType(flashType);
             setMessage(flashMessage);
-            setVisible(true);
-            setExiting(false);
+        } else if (errors && Object.keys(errors).length > 0) {
+            const firstError = Object.values(errors)[0] as string;
 
-            const timer = setTimeout(() => {
-                setExiting(true);
-
-                setTimeout(() => setVisible(false), 300);
-            }, 3000);
-
-            return () => clearTimeout(timer);
+            setType('error');
+            setMessage(firstError);
+        } else {
+            return;
         }
-    }, [flash]);
+
+        setVisible(true);
+        setExiting(false);
+
+        const timer = setTimeout(() => {
+            setExiting(true);
+            setTimeout(() => setVisible(false), 300);
+        }, 3000);
+
+        return () => clearTimeout(timer);
+    }, [flash, errors]);
 
     if ((exiting && !visible) || !type) return null;
 

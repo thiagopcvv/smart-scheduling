@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Tenant;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Users\Tenant\UserStoreRequest;
 use App\Http\Requests\Users\Tenant\UserUpdateRequest;
 use App\Models\Tenant\User;
 use App\Services\Tenant\UserService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Inertia\Inertia;
 
 class UsersController extends Controller
@@ -25,9 +27,23 @@ class UsersController extends Controller
         return Inertia::render('Tenant/Users/index', ['users' => $users]);
     }
 
+    public function create()
+    {
+        return Inertia::render('Tenant/Users/create');
+    }
+
     public function edit(User $user)
     {
         return Inertia::render('Tenant/Users/create', ['user' => $user]);
+    }
+
+    public function store(UserStoreRequest $request)
+    {
+        $data = $request->validated();
+
+        $this->service->store($data);
+
+        return redirect()->route('tenant-users')->with('success', 'Usuário cadastrado com sucesso.');
     }
 
     public function update(UserUpdateRequest $request, User $user)

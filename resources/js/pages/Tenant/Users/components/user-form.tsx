@@ -49,7 +49,8 @@ function UserForm({ user }: UserFormProps) {
     });
 
     const onSubmit = (data: UserFormValues) => {
-        const url = isEditing ? 'tenant-users.update' : 'tenant-users.update';
+        const url = isEditing ? 'tenant-users.update' : 'tenant-users.store';
+        data.cpf = data.cpf.replace(/\D/g, '');
         router.post(route(url, user?.id), data);
     };
 
@@ -94,7 +95,9 @@ function UserForm({ user }: UserFormProps) {
                                 <FormControl>
                                     <Input placeholder="000.000.000-00"
                                            {...field}
-                                           maxLength={11} />
+                                           maxLength={14}
+                                           onChange={(e) => field.onChange(maskCpf(e.target.value))}
+                                    />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
