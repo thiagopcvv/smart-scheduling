@@ -49,6 +49,10 @@ Route::middleware([
                 Route::post('/update/{user}', [\App\Http\Controllers\Tenant\UsersController::class, 'update'])->name('tenant-users.update');
                 Route::delete('/delete/{id}', [\App\Http\Controllers\Tenant\UsersController::class, 'delete'])->name('tenant-users.delete');
             });
+
+            Route::prefix('permissions')->group(function () {
+                Route::get('/roles', [App\Http\Controllers\Tenant\PermissionController::class, 'index'])->name('tenant-permission-roles');
+            });
         });
 
         Route::middleware('guest:tenant')->group(function () {

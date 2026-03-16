@@ -21,7 +21,7 @@ const navItemPermissions: NavItem[] = [
         Icon: ShieldIcon,
         description: 'Configuração de permissões dos usuários do sistema.',
         permission: ['permissions'],
-        href: '/client/permissions',
+        href: '/client/permissions/roles',
     },
 ];
 

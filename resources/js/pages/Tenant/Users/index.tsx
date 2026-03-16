@@ -2,12 +2,8 @@ import { Card, CardHeader, CardTitle } from '@/components/ui/card';
 import AppLayout from '@/layouts/Tenants/app-layout';
 import { type BreadcrumbItem, LaravelPaginator } from '@/types';
 import { User } from '@/types/user';
-import { Head, usePage } from '@inertiajs/react';
+import { Head } from '@inertiajs/react';
 import { TableUsers } from './components/table';
-
-type PageProps = {
-    permissions?: string[];
-};
 
 type UserProps = {
     users: LaravelPaginator<User>;

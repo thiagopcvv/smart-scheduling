@@ -44,6 +44,13 @@ export interface User {
     [key: string]: unknown; // This allows for additional properties...
 }
 
+export interface Role {
+    id: number;
+    name: string;
+    guard_name: string;
+    description: string;
+}
+
 export interface LaravelPaginationLink {
     url: string | null;
     label: string;
