@@ -21,4 +21,15 @@ class PermissionService
 
         return $this->repository->getAllRoles()->filterBy($filters)->paginate(10);
     }
+
+    public function storeRole(array $data)
+    {
+        $data['guard_name'] = 'tenant';
+        return $this->repository->storeRole($data);
+    }
+
+    public function updateRole(int $id, array $data)
+    {
+        return $this->repository->updateRole($id, $data);
+    }
 }
