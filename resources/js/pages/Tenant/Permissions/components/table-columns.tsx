@@ -1,16 +1,18 @@
-import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Role } from '@/types/role';
 import { router } from '@inertiajs/react';
 import { ColumnDef } from '@tanstack/react-table';
-import { MoreHorizontal, Pencil, Trash2 } from 'lucide-react';
+import { MoreHorizontal, Pencil, Shield, Trash2 } from 'lucide-react';
 import { toast } from 'sonner';
 
-const handleEdit = (id: number) => {
-    router.visit(route('tenant-permissions-roles.edit', id));
+const handlePermission = (id: number) => {
+    router.visit(route('tenant-permission-role.permission', id));
 };
 
+const handleEdit = (id: number) => {
+    router.visit(route('tenant-permission-role.edit', id))
+}
 
 const handleDelete = (id: number) => {
     if (confirm('Tem certeza que deseja excluir este grupo?')) {
@@ -47,7 +49,7 @@ export const columns: ColumnDef<Role>[] = [
         id: 'actions',
         enableHiding: false,
         cell: ({ row }) => {
-            const user = row.original;
+            const role = row.original;
 
             return (
                 <DropdownMenu>
@@ -59,11 +61,15 @@ export const columns: ColumnDef<Role>[] = [
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
                         <DropdownMenuLabel>Ações</DropdownMenuLabel>
-                        <DropdownMenuItem onClick={() => handleEdit(user.id)}>
+                        <DropdownMenuItem onClick={() => handlePermission(role.id)}>
+                            <Shield className="mr-2 h-4 w-4" />
+                            Permissões
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => handleEdit(role.id)}>
                             <Pencil className="mr-2 h-4 w-4" />
                             Editar
                         </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => handleDelete(user.id)} className="text-destructive">
+                        <DropdownMenuItem onClick={() => handleDelete(role.id)} className="text-destructive">
                             <Trash2 className="mr-2 h-4 w-4" />
                             Excluir
                         </DropdownMenuItem>

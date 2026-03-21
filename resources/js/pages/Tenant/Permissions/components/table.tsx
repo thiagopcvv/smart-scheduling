@@ -20,7 +20,7 @@ import { PlusCircle, Search } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { columns } from './table-columns';
 import { LaravelPaginator } from '@/types';
-import {useDebounce} from '@/hooks/use-debounce';
+import { useDebounce } from '@/hooks/use-debounce';
 
 interface TableRolesProps {
     roles: LaravelPaginator<Role>;
@@ -87,7 +87,7 @@ export function TableRoles({ roles }: TableRolesProps) {
     };
 
     const handleCreate = () => {
-        router.visit(route('tenant-permissions-role.create'));
+        router.visit(route('tenant-permission-role.create'));
     };
 
     return (
