@@ -37,5 +37,11 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
-        //
+        $exceptions->render(function (\Spatie\Permission\Exceptions\RoleAlreadyExists $e, $request) {
+            return redirect()->back()->with('error', 'Este grupo já existe. Tente outro nome.');
+        });
+
+        $exceptions->render(function (\Illuminate\Database\QueryException $e, $request) {
+            return redirect()->back()->with('error', 'Erro interno do sistema. Contate o suporte.');
+        });
     })->create();

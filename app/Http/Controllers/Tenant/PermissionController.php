@@ -35,7 +35,7 @@ class PermissionController extends Controller
 
     public function storeRole(Request $request)
     {
-        $data = $request->validate(['name' => 'required|unique:name', 'description' => 'nullable|string']);
+        $data = $request->validate(['name' => 'required', 'description' => 'nullable|string']);
         $this->service->storeRole($data);
 
         return redirect()->route('tenant-permission-role')->with('success', 'Grupo de Permissão criado com sucesso.');
