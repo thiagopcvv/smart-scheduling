@@ -27,7 +27,6 @@ class UserStoreRequest extends FormRequest
                 'max:255'
             ],
             'cpf' => ['required', 'string', 'size:11', 'unique:users,cpf'],
-            'login' => ['required', 'string', 'max:255', 'unique:users,login'],
             'password' => ['required', 'string', 'min:8'],
         ];
     }

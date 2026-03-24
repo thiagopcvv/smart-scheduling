@@ -26,7 +26,6 @@ class UserUpdateRequest extends FormRequest
                 'max:255'
             ],
             'cpf' => ['required', 'string', 'size:11'],
-            'login' => ['required', 'string', 'max:255'],
             'password' => ['nullable', 'min:8'],
         ];
     }

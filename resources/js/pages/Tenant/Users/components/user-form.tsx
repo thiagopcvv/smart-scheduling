@@ -3,6 +3,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { Input } from '@/components/ui/input';
 import { User } from '@/types/user';
 import { maskCpf } from '@/utils/masks';
+import { isValidCpf } from '@/utils/validators';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { router } from '@inertiajs/react';
 import { useForm } from 'react-hook-form';
@@ -12,15 +13,15 @@ const userFormSchema = z
     .object({
         name: z.string().min(3, 'Nome deve ter no mínimo 3 caracteres'),
         email: z.string().email('Email inválido'),
-        cpf: z.string().min(11, 'CPF deve ter 11 dígitos'),
-        login: z.string().min(3, 'Login deve ter no mínimo 3 caracteres'),
+        cpf: z
+            .string()
+            .min(14, 'CPF deve estar completo')
+            .refine((val) => isValidCpf(val), { message: 'CPF inválido' }),
         password: z.string().optional(),
     })
     .refine(
         (data) => {
-            if (!data.password || data.password.length === 0) {
-                return true;
-            }
+            if (!data.password || data.password.length === 0) return true;
             return data.password.length >= 6;
         },
         {
@@ -43,8 +44,7 @@ function UserForm({ user }: UserFormProps) {
         defaultValues: {
             name: user?.name || '',
             email: user?.email || '',
-            cpf: user?.cpf || '',
-            login: user?.login || '',
+            cpf: user?.cpf ? maskCpf(user.cpf) : '',
         },
     });
 
@@ -93,25 +93,12 @@ function UserForm({ user }: UserFormProps) {
                             <FormItem>
                                 <FormLabel>CPF</FormLabel>
                                 <FormControl>
-                                    <Input placeholder="000.000.000-00"
-                                           {...field}
-                                           maxLength={14}
-                                           onChange={(e) => field.onChange(maskCpf(e.target.value))}
+                                    <Input
+                                        placeholder="000.000.000-00"
+                                        {...field}
+                                        maxLength={14}
+                                        onChange={(e) => field.onChange(maskCpf(e.target.value))}
                                     />
-                                </FormControl>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
-
-                    <FormField
-                        control={form.control}
-                        name="login"
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>Login</FormLabel>
-                                <FormControl>
-                                    <Input placeholder="login" {...field} />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>

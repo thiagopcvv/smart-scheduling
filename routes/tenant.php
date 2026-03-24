@@ -51,11 +51,13 @@ Route::middleware([
             });
 
             Route::prefix('permissions')->group(function () {
-                Route::get('/roles', [App\Http\Controllers\Tenant\PermissionController::class, 'index'])->name('tenant-permission-role');
+                Route::get('/roles', [App\Http\Controllers\Tenant\PermissionController::class, 'indexRoles'])->name('tenant-permission-role');
                 Route::get('/roles/create', [App\Http\Controllers\Tenant\PermissionController::class, 'create'])->name('tenant-permission-role.create');
                 Route::get('/roles/edit/{role}', [App\Http\Controllers\Tenant\PermissionController::class, 'edit'])->name('tenant-permission-role.edit');
                 Route::post('/roles', [App\Http\Controllers\Tenant\PermissionController::class, 'storeRole'])->name('tenant-permission-role.store');
                 Route::post('/roles/{role}', [App\Http\Controllers\Tenant\PermissionController::class, 'updateRole'])->name('tenant-permission-role.update');
+                Route::get('/{role}', [App\Http\Controllers\Tenant\PermissionController::class, 'index'])->name('tenant-permission');
+                Route::post('/{role}/sync', [App\Http\Controllers\Tenant\PermissionController::class, 'syncRole'])->name('tenant-permission.sync');
             });
         });
 

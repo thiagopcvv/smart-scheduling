@@ -7,7 +7,7 @@ import { MoreHorizontal, Pencil, Shield, Trash2 } from 'lucide-react';
 import { toast } from 'sonner';
 
 const handlePermission = (id: number) => {
-    router.visit(route('tenant-permission-role.permission', id));
+    router.visit(route('tenant-permission', id));
 };
 
 const handleEdit = (id: number) => {
