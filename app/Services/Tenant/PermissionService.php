@@ -3,6 +3,7 @@
 namespace App\Services\Tenant;
 
 use App\Repositories\Tenant\PermissionRepository;
+use Spatie\Permission\Models\Role;
 
 class PermissionService
 {
@@ -11,6 +12,16 @@ class PermissionService
     public function __construct()
     {
         $this->repository = resolve(PermissionRepository::class);
+    }
+
+    public function getPermissions(Role $role): array
+    {
+        return $this->repository->getPermissionsByRole($role);
+    }
+
+    public function getUsers(Role $role): array
+    {
+        return $this->repository->getUsersByRole($role);
     }
 
     public function getAllRoles($filters)
@@ -31,5 +42,11 @@ class PermissionService
     public function updateRole(int $id, array $data)
     {
         return $this->repository->updateRole($id, $data);
+    }
+
+    public function syncRole(Role $role, array $data): void
+    {
+        $this->repository->syncRolePermissions($role, $data['permissions'] ?? []);
+        $this->repository->syncRoleUsers($role, $data['users'] ?? []);
     }
 }

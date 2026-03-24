@@ -51,6 +51,12 @@ export interface Role {
     description: string;
 }
 
+export interface Permission {
+    id: number;
+    name: string;
+    vinculo: boolean;
+}
+
 export interface LaravelPaginationLink {
     url: string | null;
     label: string;
