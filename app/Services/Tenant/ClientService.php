@@ -13,21 +13,19 @@ class ClientService
         return $this->repository->create($data); 
     }
 
-    public function update($clientId, $data)
+    public function update($id, $data)
     {
-        $client = $this->repository->find($clientId);
-        return $this->repository->update($client, $data); 
+        $this->repository->update($id, $data); 
     }
 
-    public function delete($clientId)
+    public function delete($id)
     {
-        $client = $this->repository->find($clientId);
-        $this->repository->delete($client); 
+        $this->repository->delete($id); 
     }
 
-    public function find($clientId)
+    public function find($id)
     {
-        return $this->repository->find($clientId); 
+        return $this->repository->find($id); 
     }
 
     public function getAll($filters)

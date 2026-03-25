@@ -11,18 +11,17 @@ class ClientRepository
         return Client::create($data);
     }
 
-    public function update(Client $client, array $data): Client
+    public function update($id, array $data)
     {
-        $client->update($data);
-        return $client;
+        Client::find($id)->update($data);
     }
 
-    public function delete(Client $client): void
+    public function delete($id)
     {
-        $client->delete();
+        Client::find($id)->delete();
     }
 
-    public function find(int $id): ?Client
+    public function find($id)
     {
         return Client::find($id);
     }
