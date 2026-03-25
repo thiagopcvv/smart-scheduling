@@ -3,64 +3,49 @@
 namespace App\Http\Controllers\Tenant;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Tenant\ClientRequest;
 use App\Models\Tenant\Client;
+use App\Services\Tenant\ClientService;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class ClientController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function __construct(private ClientService $service) {}
+
+    public function index(Request $request)
     {
-        //
+        $filters = $request->all();
+        $clients = $this->service->getAll($filters);
+
+        return Inertia::render('Tenant/Client/index', ['clients' => $clients]); 
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        return Inertia::render('Tenant/Client/create'); 
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function store(ClientRequest $request)
     {
-        //
+        $this->service->create($request->validated());
+        return redirect()->route('tenant-clients')->with('success', 'Cliente cadastrado com sucesso!');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Client $client)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(Client $client)
     {
-        //
+        return Inertia::render('Tenant/Client/edit', ['client' => $client]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Client $client)
+    public function update(ClientRequest $request, Client $client)
     {
-        //
+        $this->service->update($client->id, $request->validated());
+        return redirect()->route('tenant-clients')->with('success', 'Cliente atualizado com sucesso!');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Client $client)
+    public function delete($id)
     {
-        //
+        $this->service->delete($id);
+        return redirect()->route('tenant-clients')->with('success', 'Cliente removido com sucesso!');
     }
 }

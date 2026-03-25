@@ -16,11 +16,12 @@ return new class extends Migration
             $table->string('nome');
             $table->string('cpf')->unique();
             $table->string('email');
-            $table->string('telefone');
-            $table->string('rua');
-            $table->string('bairro');
-            $table->string('cidade');
-            $table->string('uf');
+            $table->string('telefone')->nullable();
+            $table->string('rua')->nullable();
+            $table->string('bairro')->nullable();
+            $table->string('cidade')->nullable();
+            $table->string('uf')->nullable();
+            $table->string('numero')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

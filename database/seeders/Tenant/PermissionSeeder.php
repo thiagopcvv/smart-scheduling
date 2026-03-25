@@ -57,6 +57,11 @@ class PermissionSeeder extends Seeder
                 'name' => 'permissions',
                 'guard_name' => 'tenant',
                 'description' => 'Gerenciar permissões do sistema.'
+            ],
+            [
+                'name' => 'clients',
+                'guard_name' => 'tenant',
+                'description' => 'Gerenciar clientes do sistema.'
             ]
         ];
 

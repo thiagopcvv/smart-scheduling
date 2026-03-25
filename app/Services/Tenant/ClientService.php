@@ -10,26 +10,31 @@ class ClientService
 
     public function create($data)
     {
-        $this->repository->create($data); 
+        return $this->repository->create($data); 
     }
 
     public function update($clientId, $data)
     {
-        $this->repository->update($clientId, $data); 
+        $client = $this->repository->find($clientId);
+        return $this->repository->update($client, $data); 
     }
 
     public function delete($clientId)
     {
-        $this->repository->delete($clientId); 
+        $client = $this->repository->find($clientId);
+        $this->repository->delete($client); 
     }
 
     public function find($clientId)
     {
-        $this->repository->find($clientId); 
+        return $this->repository->find($clientId); 
     }
 
-    public function all()
+    public function getAll($filters)
     {
-        $this->repository->all(); 
+        if (data_get($filters, 'pagination')) {
+            return $this->repository->getAll()->filterBy($filters)->paginate($filters['pagination']);
+        }
+        return $this->repository->getAll()->filterBy($filters)->paginate(10);
     }
 }

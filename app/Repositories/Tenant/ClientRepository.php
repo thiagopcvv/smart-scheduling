@@ -27,8 +27,8 @@ class ClientRepository
         return Client::find($id);
     }
 
-    public function all()
+    public function getAll()
     {
-        return Client::all();
+        return Client::orderBy('created_at', 'desc');
     }
 }
