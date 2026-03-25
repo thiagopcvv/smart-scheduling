@@ -59,6 +59,15 @@ Route::middleware([
                 Route::get('/{role}', [App\Http\Controllers\Tenant\PermissionController::class, 'index'])->name('tenant-permission');
                 Route::post('/{role}/sync', [App\Http\Controllers\Tenant\PermissionController::class, 'syncRole'])->name('tenant-permission.sync');
             });
+
+            Route::prefix('clients')->group(function () {
+                Route::get('/', [App\Http\Controllers\Tenant\ClientController::class, 'index'])->name('tenant-clients');
+                Route::get('/create', [App\Http\Controllers\Tenant\ClientController::class, 'create'])->name('tenant-clients.create');
+                Route::get('/edit/{client}', [App\Http\Controllers\Tenant\ClientController::class, 'edit'])->name('tenant-clients.edit');
+                Route::post('/store', [App\Http\Controllers\Tenant\ClientController::class, 'store'])->name('tenant-clients.store');
+                Route::post('/update/{client}', [App\Http\Controllers\Tenant\ClientController::class, 'update'])->name('tenant-clients.update');
+                Route::delete('/delete/{id}', [App\Http\Controllers\Tenant\ClientController::class, 'delete'])->name('tenant-clients.delete');
+            });
         });
 
         Route::middleware('guest:tenant')->group(function () {
