@@ -40,7 +40,6 @@ class UserStoreRequest extends FormRequest
     {
         return [
             'cpf.unique' => 'Já existe um usuário com este CPF.',
-            'login.unique' => 'Este login já está sendo utilizado.',
         ];
     }
 }
