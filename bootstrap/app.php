@@ -42,6 +42,7 @@ return Application::configure(basePath: dirname(__DIR__))
         });
 
         $exceptions->render(function (\Illuminate\Database\QueryException $e, $request) {
+            dd($e);
             return redirect()->back()->with('error', 'Erro interno do sistema. Contate o suporte.');
         });
     })->create();

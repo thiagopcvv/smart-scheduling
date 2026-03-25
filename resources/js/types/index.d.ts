@@ -57,6 +57,21 @@ export interface Permission {
     vinculo: boolean;
 }
 
+export interface Client {
+    id: number;
+    nome: string;
+    cpf: string;
+    email: string;
+    telefone: string;
+    rua: string;
+    bairro: string;
+    cidade: string;
+    uf: string;
+    created_at: string;
+    updated_at: string;
+    deleted_at: string | null;
+}
+
 export interface LaravelPaginationLink {
     url: string | null;
     label: string;

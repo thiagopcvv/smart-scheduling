@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use Database\Seeders\Tenant\ClientSeeder;
 use Database\Seeders\Tenant\PermissionSeeder;
 use Database\Seeders\Tenant\UserSeeder;
 use Illuminate\Database\Seeder;
@@ -17,6 +18,7 @@ class DatabaseTenantSeeder extends Seeder
             $this->call([
                 UserSeeder::class,
                 PermissionSeeder::class,
+                ClientSeeder::class,
             ]);
         } else if (config('app.env') === 'production') {
             $this->call([

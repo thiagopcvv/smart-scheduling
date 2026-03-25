@@ -4,7 +4,7 @@ import { NavUser } from '@/components/Tenant/nav-user';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
 import { type NavItem, SharedData } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
-import { BookOpen, Folder, LayoutGrid, ShieldIcon, UserCog } from 'lucide-react';
+import { BookOpen, Folder, LayoutGrid, ShieldIcon, UserCog, SquareUser } from 'lucide-react';
 import AppLogo from '../app-logo';
 
 const mainNavItems: NavItem[] = [
@@ -40,6 +40,12 @@ const navItemPermissions: NavItem[] = [
         icon: ShieldIcon,
         permission: ['permissions'],
         href: '/client/permissions/roles',
+    },
+    {
+        title: 'Clientes',
+        icon: SquareUser,
+        permission: ['clients'],
+        href: '/client/clients',
     },
 ];
 
