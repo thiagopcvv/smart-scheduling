@@ -42,12 +42,12 @@ Route::middleware([
             Route::put('settings/password', [\App\Http\Controllers\Tenant\PasswordController::class, 'update'])->name('tenant-password.update');
 
             Route::prefix('users')->group(function () {
-                Route::get('/', [\App\Http\Controllers\Tenant\UsersController::class, 'index'])->name('tenant-users');
-                Route::get('/create', [\App\Http\Controllers\Tenant\UsersController::class, 'create'])->name('tenant-users.create');
-                Route::get('/edit/{user}', [\App\Http\Controllers\Tenant\UsersController::class, 'edit'])->name('tenant-users.edit');
-                Route::post('/store', [\App\Http\Controllers\Tenant\UsersController::class, 'store'])->name('tenant-users.store');
-                Route::post('/update/{user}', [\App\Http\Controllers\Tenant\UsersController::class, 'update'])->name('tenant-users.update');
-                Route::delete('/delete/{id}', [\App\Http\Controllers\Tenant\UsersController::class, 'delete'])->name('tenant-users.delete');
+                Route::get('/', [\App\Http\Controllers\Tenant\UsersController::class, 'index'])->name('tenant-users')->middleware('permission:usuarios');
+                Route::get('/create', [\App\Http\Controllers\Tenant\UsersController::class, 'create'])->name('tenant-users.create')->middleware('permission:create.usuarios');
+                Route::get('/edit/{user}', [\App\Http\Controllers\Tenant\UsersController::class, 'edit'])->name('tenant-users.edit')->middleware('permission:update.usuarios');
+                Route::post('/store', [\App\Http\Controllers\Tenant\UsersController::class, 'store'])->name('tenant-users.store')->middleware('permission:create.usuarios');
+                Route::post('/update/{user}', [\App\Http\Controllers\Tenant\UsersController::class, 'update'])->name('tenant-users.update')->middleware('permission:update.usuarios');
+                Route::delete('/delete/{id}', [\App\Http\Controllers\Tenant\UsersController::class, 'delete'])->name('tenant-users.delete')->middleware('permission:delete.usuarios');
             });
 
             Route::prefix('permissions')->group(function () {
@@ -61,12 +61,12 @@ Route::middleware([
             });
 
             Route::prefix('clients')->group(function () {
-                Route::get('/', [App\Http\Controllers\Tenant\ClientController::class, 'index'])->name('tenant-clients');
-                Route::get('/create', [App\Http\Controllers\Tenant\ClientController::class, 'create'])->name('tenant-clients.create');
-                Route::get('/edit/{client}', [App\Http\Controllers\Tenant\ClientController::class, 'edit'])->name('tenant-clients.edit');
-                Route::post('/store', [App\Http\Controllers\Tenant\ClientController::class, 'store'])->name('tenant-clients.store');
-                Route::post('/update/{client}', [App\Http\Controllers\Tenant\ClientController::class, 'update'])->name('tenant-clients.update');
-                Route::delete('/delete/{id}', [App\Http\Controllers\Tenant\ClientController::class, 'delete'])->name('tenant-clients.delete');
+                Route::get('/', [App\Http\Controllers\Tenant\ClientController::class, 'index'])->name('tenant-clients')->middleware('permission:clients');
+                Route::get('/create', [App\Http\Controllers\Tenant\ClientController::class, 'create'])->name('tenant-clients.create')->middleware('permission:create.clients');
+                Route::get('/edit/{client}', [App\Http\Controllers\Tenant\ClientController::class, 'edit'])->name('tenant-clients.edit')->middleware('permission:update.clients');
+                Route::post('/store', [App\Http\Controllers\Tenant\ClientController::class, 'store'])->name('tenant-clients.store')->middleware('permission:create.clients');
+                Route::post('/update/{client}', [App\Http\Controllers\Tenant\ClientController::class, 'update'])->name('tenant-clients.update')->middleware('permission:update.clients');
+                Route::delete('/delete/{id}', [App\Http\Controllers\Tenant\ClientController::class, 'delete'])->name('tenant-clients.delete')->middleware('permission:delete.clients');
             });
         });
 

@@ -15,13 +15,6 @@ const handleDelete = (id: number) => {
     if (confirm('Tem certeza que deseja excluir este usuário?')) {
         router.delete(route('tenant-users.delete', id), {
             preserveScroll: true,
-            onSuccess: () => {
-                toast.success('Usuário excluído com sucesso!');
-            },
-            onError: (errors) => {
-                toast.error('Erro ao excluir usuário');
-                console.error(errors);
-            },
         });
     }
 };

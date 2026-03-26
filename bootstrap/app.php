@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Route;
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
         web: __DIR__ . '/../routes/web.php',
-        commands: __DIR__.'/../routes/console.php',
+        commands: __DIR__ . '/../routes/console.php',
         health: '/up',
         using: function () {
             $centralDomains = config('tenancy.central_domains');
@@ -34,15 +34,22 @@ return Application::configure(basePath: dirname(__DIR__))
 
         $middleware->alias([
             'tenant.auth' => \App\Http\Middleware\TenantAuthenticate::class,
+            'permission' => \Spatie\Permission\Middleware\PermissionMiddleware::class,
+            'role' => \Spatie\Permission\Middleware\RoleMiddleware::class,
+            'role_or_permission' => \Spatie\Permission\Middleware\RoleOrPermissionMiddleware::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
+
+        $exceptions->render(function (\Spatie\Permission\Exceptions\UnauthorizedException $e, $request) {
+            return redirect()->back()->with('error', 'Você não tem permissão para realizar esta ação.');
+        });
+
         $exceptions->render(function (\Spatie\Permission\Exceptions\RoleAlreadyExists $e, $request) {
             return redirect()->back()->with('error', 'Este grupo já existe. Tente outro nome.');
         });
 
         $exceptions->render(function (\Illuminate\Database\QueryException $e, $request) {
-            dd($e);
             return redirect()->back()->with('error', 'Erro interno do sistema. Contate o suporte.');
         });
     })->create();

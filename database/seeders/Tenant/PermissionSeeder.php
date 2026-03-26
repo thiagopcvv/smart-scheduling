@@ -62,7 +62,22 @@ class PermissionSeeder extends Seeder
                 'name' => 'clients',
                 'guard_name' => 'tenant',
                 'description' => 'Gerenciar clientes do sistema.'
-            ]
+            ],
+            [
+                'name' => 'create.clients',
+                'guard_name' => 'tenant',
+                'description' => 'Criação de clientes do sistema.'
+            ],
+            [
+                'name' => 'update.clients',
+                'guard_name' => 'tenant',
+                'description' => 'Atualização de clientes do sistema.'
+            ],
+            [
+                'name' => 'delete.clients',
+                'guard_name' => 'tenant',
+                'description' => 'Exclusão de clientes do sistema.'
+            ],
         ];
 
         foreach ($roles as $role) {

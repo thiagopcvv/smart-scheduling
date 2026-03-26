@@ -56,11 +56,7 @@ class UsersController extends Controller
 
     public function delete($id)
     {
-        try {
-            $this->service->delete($id);
-            response()->json(['status' => 'success'], 200);
-        } catch (\Exception $e) {
-            response()->json(['error' => $e->getMessage()]);
-        }
+        $this->service->delete($id);
+        return redirect()->route('tenant-users')->with('success', 'Usuário deletado com sucesso.');
     }
 }
