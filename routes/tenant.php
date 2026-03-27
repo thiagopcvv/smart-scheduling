@@ -68,6 +68,15 @@ Route::middleware([
                 Route::post('/update/{client}', [App\Http\Controllers\Tenant\ClientController::class, 'update'])->name('tenant-clients.update')->middleware('permission:update.clients');
                 Route::delete('/delete/{id}', [App\Http\Controllers\Tenant\ClientController::class, 'delete'])->name('tenant-clients.delete')->middleware('permission:delete.clients');
             });
+
+            Route::prefix('offerings')->group(function () {
+                Route::get('/', [App\Http\Controllers\Tenant\OfferingController::class, 'index'])->name('tenant-offerings')->middleware('permission:offerings');
+                Route::get('/create', [App\Http\Controllers\Tenant\OfferingController::class, 'create'])->name('tenant-offerings.create')->middleware('permission:create.offerings');
+                Route::get('/edit/{offering}', [App\Http\Controllers\Tenant\OfferingController::class, 'edit'])->name('tenant-offerings.edit')->middleware('permission:update.offerings');
+                Route::post('/store', [App\Http\Controllers\Tenant\OfferingController::class, 'store'])->name('tenant-offerings.store')->middleware('permission:create.offerings');
+                Route::post('/update/{offering}', [App\Http\Controllers\Tenant\OfferingController::class, 'update'])->name('tenant-offerings.update')->middleware('permission:update.offerings');
+                Route::delete('/delete/{id}', [App\Http\Controllers\Tenant\OfferingController::class, 'delete'])->name('tenant-offerings.delete')->middleware('permission:delete.offerings');
+            });
         });
 
         Route::middleware('guest:tenant')->group(function () {
