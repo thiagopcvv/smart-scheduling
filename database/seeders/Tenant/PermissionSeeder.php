@@ -78,6 +78,26 @@ class PermissionSeeder extends Seeder
                 'guard_name' => 'tenant',
                 'description' => 'Exclusão de clientes do sistema.'
             ],
+            [
+                'name' => 'offerings',
+                'guard_name' => 'tenant',
+                'description' => 'Gerenciar serviços do sistema.'
+            ],
+            [
+                'name' => 'create.offerings',
+                'guard_name' => 'tenant',
+                'description' => 'Criação de serviços do sistema.'
+            ],
+            [
+                'name' => 'update.offerings',
+                'guard_name' => 'tenant',
+                'description' => 'Atualização de serviços do sistema.'
+            ],
+            [
+                'name' => 'delete.offerings',
+                'guard_name' => 'tenant',
+                'description' => 'Exclusão de serviços do sistema.'
+            ],
         ];
 
         foreach ($roles as $role) {
