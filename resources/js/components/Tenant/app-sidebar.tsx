@@ -4,7 +4,7 @@ import { NavUser } from '@/components/Tenant/nav-user';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
 import { type NavItem, SharedData } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
-import { HandCoins, LayoutGrid, ShieldIcon, UserCog, SquareUser } from 'lucide-react';
+import { HandCoins, LayoutGrid, ShieldIcon, UserCog, SquareUser, Users } from 'lucide-react';
 import AppLogo from '../app-logo';
 
 const mainNavItems: NavItem[] = [
@@ -52,6 +52,12 @@ const navItemPermissions: NavItem[] = [
         icon: HandCoins,
         permission: ['offerings'],
         href: '/client/offerings',
+    },
+    {
+        title: 'Funcionários',
+        icon: Users,
+        permission: ['employees'],
+        href: '/client/employees',
     },
 ];
 

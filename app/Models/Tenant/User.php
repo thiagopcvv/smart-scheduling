@@ -57,4 +57,9 @@ class User extends Authenticatable
 
         return $filter->apply();
     }
+
+    public function employee()
+    {
+        return $this->hasOne(Employee::class);
+    }
 }

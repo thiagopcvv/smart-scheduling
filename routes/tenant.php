@@ -77,6 +77,20 @@ Route::middleware([
                 Route::post('/update/{offering}', [App\Http\Controllers\Tenant\OfferingController::class, 'update'])->name('tenant-offerings.update')->middleware('permission:update.offerings');
                 Route::delete('/delete/{id}', [App\Http\Controllers\Tenant\OfferingController::class, 'delete'])->name('tenant-offerings.delete')->middleware('permission:delete.offerings');
             });
+
+            Route::prefix('employees')->group(function () {
+                Route::get('/', [App\Http\Controllers\Tenant\EmployeeController::class, 'index'])->name('tenant-employees')->middleware('permission:employees');
+                Route::get('/create', [App\Http\Controllers\Tenant\EmployeeController::class, 'create'])->name('tenant-employees.create')->middleware('permission:create.employees');
+                Route::get('/edit/{employee}', [App\Http\Controllers\Tenant\EmployeeController::class, 'edit'])->name('tenant-employees.edit')->middleware('permission:update.employees');
+                Route::post('/store', [App\Http\Controllers\Tenant\EmployeeController::class, 'store'])->name('tenant-employees.store')->middleware('permission:create.employees');
+                Route::post('/update/{employee}', [App\Http\Controllers\Tenant\EmployeeController::class, 'update'])->name('tenant-employees.update')->middleware('permission:update.employees');
+                Route::delete('/delete/{id}', [App\Http\Controllers\Tenant\EmployeeController::class, 'delete'])->name('tenant-employees.delete')->middleware('permission:delete.employees');
+
+                Route::prefix('{employee}')->group(function () {
+                    Route::get('/availabilities', [App\Http\Controllers\Tenant\EmployeeAvailabilityController::class, 'index'])->name('tenant-employees.availabilities')->middleware('permission:update.employees');
+                    Route::post('/availabilities', [App\Http\Controllers\Tenant\EmployeeAvailabilityController::class, 'store'])->name('tenant-employees.availabilities.store')->middleware('permission:update.employees');
+                });
+            });
         });
 
         Route::middleware('guest:tenant')->group(function () {
