@@ -1,29 +1,62 @@
+import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Offering } from '@/types/offering';
 import { router } from '@inertiajs/react';
 import { ColumnDef } from '@tanstack/react-table';
 import { MoreHorizontal, Pencil, Trash2 } from 'lucide-react';
-import { toast } from 'sonner';
+import { ConfirmDialog } from '@/components/confirm-dialog';
 
 const handleEdit = (id: number) => {
     router.visit(route('tenant-offerings.edit', id));
 };
 
-const handleDelete = (id: number) => {
-    if (confirm('Tem certeza que deseja excluir este serviço/produto?')) {
-        router.delete(route('tenant-offerings.delete', id), {
+function ActionsCell({ offering }: { offering: Offering }) {
+    const [confirmOpen, setConfirmOpen] = useState(false);
+
+    const handleDelete = () => {
+        router.delete(route('tenant-offerings.delete', offering.id), {
             preserveScroll: true,
-            onSuccess: () => {
-                toast.success('Serviço/Produto excluído com sucesso!');
-            },
-            onError: (errors) => {
-                toast.error('Erro ao excluir serviço/produto');
-                console.error(errors);
-            },
         });
-    }
-};
+    };
+
+    return (
+        <>
+            <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                    <Button variant="ghost" className="h-8 w-8 p-0">
+                        <span className="sr-only">Abrir menu</span>
+                        <MoreHorizontal className="h-4 w-4" />
+                    </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                    <DropdownMenuLabel>Ações</DropdownMenuLabel>
+                    <DropdownMenuItem onClick={() => handleEdit(offering.id)}>
+                        <Pencil className="mr-2 h-4 w-4" />
+                        Editar
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => setConfirmOpen(true)} className="text-destructive">
+                        <Trash2 className="mr-2 h-4 w-4" />
+                        Excluir
+                    </DropdownMenuItem>
+                </DropdownMenuContent>
+            </DropdownMenu>
+
+            {confirmOpen && (
+                <ConfirmDialog
+                    open={confirmOpen}
+                    onOpenChange={setConfirmOpen}
+                    title="Excluir serviço"
+                    description="Tem certeza que deseja excluir este serviço/produto? Esta ação não pode ser desfeita."
+                    confirmLabel="Excluir"
+                    cancelLabel="Cancelar"
+                    onConfirm={handleDelete}
+                    variant="destructive"
+                />
+            )}
+        </>
+    );
+}
 
 export const columns: ColumnDef<Offering>[] = [
     {
@@ -74,30 +107,6 @@ export const columns: ColumnDef<Offering>[] = [
     {
         id: 'actions',
         enableHiding: false,
-        cell: ({ row }) => {
-            const offering = row.original;
-
-            return (
-                <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" className="h-8 w-8 p-0">
-                            <span className="sr-only">Abrir menu</span>
-                            <MoreHorizontal className="h-4 w-4" />
-                        </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                        <DropdownMenuLabel>Ações</DropdownMenuLabel>
-                        <DropdownMenuItem onClick={() => handleEdit(offering.id)}>
-                            <Pencil className="mr-2 h-4 w-4" />
-                            Editar
-                        </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => handleDelete(offering.id)} className="text-destructive">
-                                    <Trash2 className="mr-2 h-4 w-4" />
-                            Excluir
-                        </DropdownMenuItem>
-                    </DropdownMenuContent>
-                </DropdownMenu>
-            );
-        },
+        cell: ({ row }) => <ActionsCell offering={row.original} />,
     },
 ];

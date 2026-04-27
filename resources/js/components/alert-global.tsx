@@ -60,7 +60,7 @@ export function AlertGlobal() {
     if ((exiting && !visible) || !type) return null;
 
     return (
-        <div className="fixed top-4 right-4 z-50 w-[300px]">
+        <div className="fixed top-4 right-4 z-[9999] w-[300px]">
             <Alert exiting={exiting} variant={type === 'error' ? 'destructive' : type}>
                 {iconMap[type]}
                 <div className="flex items-start gap-2">
