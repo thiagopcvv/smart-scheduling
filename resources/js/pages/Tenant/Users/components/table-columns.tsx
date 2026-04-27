@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
@@ -5,20 +6,60 @@ import { User } from '@/types/user';
 import { router } from '@inertiajs/react';
 import { ColumnDef } from '@tanstack/react-table';
 import { MoreHorizontal, Pencil, Trash2 } from 'lucide-react';
-import { toast } from 'sonner';
+import { ConfirmDialog } from '@/components/confirm-dialog';
+
 
 const handleEdit = (id: number) => {
     router.visit(route('tenant-users.edit', id));
 };
-
-const handleDelete = (id: number) => {
-    if (confirm('Tem certeza que deseja excluir este usuário?')) {
-        router.delete(route('tenant-users.delete', id), {
+ 
+function ActionsCell({ user }: { user: User }) {
+    const [confirmOpen, setConfirmOpen] = useState(false);
+ 
+    const handleDelete = () => {
+        router.delete(route('tenant-users.delete', user.id), {
             preserveScroll: true,
         });
-    }
-};
-
+    };
+ 
+    return (
+        <>
+            <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                    <Button variant="ghost" className="h-8 w-8 p-0">
+                        <span className="sr-only">Abrir menu</span>
+                        <MoreHorizontal className="h-4 w-4" />
+                    </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                    <DropdownMenuLabel>Ações</DropdownMenuLabel>
+                    <DropdownMenuItem onClick={() => handleEdit(user.id)}>
+                        <Pencil className="mr-2 h-4 w-4" />
+                        Editar
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => setConfirmOpen(true)} className="text-destructive">
+                        <Trash2 className="mr-2 h-4 w-4" />
+                        Excluir
+                    </DropdownMenuItem>
+                </DropdownMenuContent>
+            </DropdownMenu>
+ 
+            {confirmOpen && (
+                <ConfirmDialog
+                open={confirmOpen}
+                onOpenChange={setConfirmOpen}
+                title="Excluir usuário"
+                description="Tem certeza que deseja excluir este usuário? Esta ação não pode ser desfeita."
+                confirmLabel="Excluir"
+                cancelLabel="Cancelar"
+                onConfirm={handleDelete}
+                variant="destructive"
+            />
+            )}
+        </>
+    );
+}
+ 
 export const columns: ColumnDef<User>[] = [
     {
         accessorKey: 'id',
@@ -51,30 +92,6 @@ export const columns: ColumnDef<User>[] = [
     {
         id: 'actions',
         enableHiding: false,
-        cell: ({ row }) => {
-            const user = row.original;
-
-            return (
-                <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" className="h-8 w-8 p-0">
-                            <span className="sr-only">Abrir menu</span>
-                            <MoreHorizontal className="h-4 w-4" />
-                        </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                        <DropdownMenuLabel>Ações</DropdownMenuLabel>
-                        <DropdownMenuItem onClick={() => handleEdit(user.id)}>
-                            <Pencil className="mr-2 h-4 w-4" />
-                            Editar
-                        </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => handleDelete(user.id)} className="text-destructive">
-                            <Trash2 className="mr-2 h-4 w-4" />
-                            Excluir
-                        </DropdownMenuItem>
-                    </DropdownMenuContent>
-                </DropdownMenu>
-            );
-        },
+        cell: ({ row }) => <ActionsCell user={row.original} />,
     },
 ];
